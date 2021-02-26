@@ -1,8 +1,8 @@
 'use strict';
 (function(global, factory) {
     if (typeof module === 'object' && typeof module.exports === 'object') {
-        var Pickr = require('@simonwep/pickr');
-        var Konva = require('konva');
+        window.Pickr = require('@simonwep/pickr');
+        window.Konva = require('konva');;
         if (global.document) {
           module.exports = factory(global);
         }
@@ -11,8 +11,7 @@
         }
     }
     else if (typeof define === 'function' && define.amd) {
-        define('AJTEAdminEditor', [], factory(global));
-        define('AJTEUserEditor', [], factory(global));
+        define('AJTEEditor', [], factory(global));
     }
     else {
         factory(global);
@@ -228,7 +227,7 @@
 
     AJTEBar.prototype.addFont = function(fontFamily){
         this.settings.fonts.push(fontFamily);
-        fontFamilyOptions = this.generateFontOptions(this.args);
+        var fontFamilyOptions = this.generateFontOptions(this.args);
         if(fontFamilyOptions && this.elements.fontFamily){
             this.elements.fontFamily.innerHTML = fontFamilyOptions;
         }
@@ -2582,7 +2581,6 @@
                 xhr.setRequestHeader(key, value);
             })
         }
-        
         xhr.send(formData);
     }
 

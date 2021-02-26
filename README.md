@@ -18,9 +18,9 @@ $ yarn add ajjya-ajte-canvas-aditor
 Include code and style:
 ```js
 
-import '@ajjya/ajte-canvas-aditor/ajteditor.scss';
+import 'ajjya-ajte-canvas-aditor/ajteditor.scss';
 
-import { AJTEAdminEditor, AJTEUserEditor } from '@ajjya/ajte-canvas-aditor';
+import { AJTEAdminEditor, AJTEUserEditor } from 'ajjya-ajte-canvas-aditor';
 ```
 ---
 > Please take into consideration to use the modern version and add polyfills later to your final bundle!
@@ -32,7 +32,7 @@ import { AJTEAdminEditor, AJTEUserEditor } from '@ajjya/ajte-canvas-aditor';
 ```html
 
 <link rel="stylesheet" href="../node_modules/@simonwep/pickr/dist/themes/classic.min.css"/>
-<link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css"/>
 <link href="../ajteditor.min.css" rel="stylesheet">
 
 <script type="text/javascript" src="../node_modules/konva/konva.min.js"></script>
@@ -42,8 +42,8 @@ import { AJTEAdminEditor, AJTEUserEditor } from '@ajjya/ajte-canvas-aditor';
 
 ## Usage
 There are 2 variants for usage:
-####AJTEAdminEditor - this is full editor where you can create template.
-####AJTEUserEditor - this is user editor where you can user created template and just allow user change content from created template.
+#### AJTEAdminEditor - this is full editor where you can create template.
+#### AJTEUserEditor - this is user editor where you can user created template and just allow user change content from created template.
 
 ```javascript
 import FontFaceObserver from 'fontfaceobserver';
@@ -124,19 +124,19 @@ You can use FontFaceObserver only if you are going to load font.
 All parametrs are not requiered.
 * containerOffset - let/top offset of your editor
 * saveInfo:
-#### requestHeaders(array of objects) - you can add any if needed
-#### url(string): allow you to save template as JSON. You need just give url which get by POST string variable "code" - and save in any convinient Database
+ * requestHeaders(array of objects) - you can add any if needed
+ * url(string): allow you to save template as JSON. You need just give url which get by POST string variable "code" - and save in any convinient Database
 * scriptUrl(string) - path to module in order to take images
 * code(string) - code of template if you try to load exists template 
 * title(string) - title of template
 * category(number) - category of your template if your architecture has categogory of each template
 * templateId(number) - ID of tempalate saved in your DB
 * cb(object) - set of callbacks
-#### image_cb - fires then image is loaded then user used Image element
-#### after_create_cb(templateId) - fires then editor elements are loaded
-#### success_cb - fires then smth success happends, for example after success saving
-#### error_cb(message) - fires then error happends, for example after error saving
-#### init_cb - fires after editor inited elements, you can use it for loading fonts.
+ * image_cb - fires then image is loaded then user used Image element
+ * after_create_cb(templateId) - fires then editor elements are loaded
+ * success_cb - fires then smth success happends, for example after success saving
+ * error_cb(message) - fires then error happends, for example after error saving
+ * init_cb - fires after editor inited elements, you can use it for loading fonts.
 
 
 You can get more information from example https://github.com/Ajjya/AJTE-canvas-editor/example

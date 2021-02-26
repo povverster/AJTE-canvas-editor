@@ -1,8 +1,10 @@
 {
   "name": "ajjya-ajte-canvas-aditor",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "Javascript canvas editor based on konva.js (https://konvajs.org/)",
-  "main": "ajteeditor.js",
+  "main": "ajteditor.js",
+  "sass": "ajteditor.scss",
+  "style": "ajteditor.min.css",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,8 +23,8 @@
   },
   "homepage": "https://github.com/Ajjya/AJTE-canvas-editor#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.2",
     "@simonwep/pickr": "^1.8.0",
-    "font-awesome": "^4.7.0",
     "konva": "^7.2.4"
   }
 }

@@ -1,5 +1,5 @@
-import "font-awesome";
-import '@simonwep/pickr/dist/themes/classic.min.css';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@simonwep/pickr/src/scss/themes/classic';
 
 #ajteditor{
     margin: 0;
