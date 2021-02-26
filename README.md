@@ -20,7 +20,7 @@ Include code and style:
 
 import 'ajjya-ajte-canvas-aditor/ajteditor.scss';
 
-import { AJTEAdminEditor, AJTEUserEditor } from 'ajjya-ajte-canvas-aditor';
+import JTEEditor from 'ajjya-ajte-canvas-aditor';
 const AJTEAdminEditor = AJTEEditor.AJTEAdminEditor;
 const AJTEUserEditor = AJTEEditor.AJTEUserEditor;
 ```
