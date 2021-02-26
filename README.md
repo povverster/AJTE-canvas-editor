@@ -97,24 +97,25 @@ document.addEventListener('DOMContentLoaded', function () {
 <body>
 	<div id="ajte"></div>
 
-		<script type="text/javascript">
+	<script type="text/javascript">
 	    window.baseUrl = '';
 	    window.code = "";
 	    window.title = "";
 	    window.category = "";
 	    window.templateId = 0;
 	    window.customFields = {
-	      description: {
-	        name: "description",
-	        label: "Text for Social Media",
-	        comment: '<span class="comment_text">500 characters max.</span>',
-	        value: "some value if needed",
-	        validation: {
-	          "max": 500
-	        }
-	      }
+			description: {
+				name: "description",
+				label: "Text for Social Media",
+				comment: '<span class="comment_text">500 characters max.</span>',
+				value: "some value if needed",
+				validation: {
+					"max": 500
+				}
+			}
 	    }
 	</script>
+<body>
 ```
 
 You can use FontFaceObserver only if you are going to load font.
