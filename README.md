@@ -21,6 +21,8 @@ Include code and style:
 import 'ajjya-ajte-canvas-aditor/ajteditor.scss';
 
 import { AJTEAdminEditor, AJTEUserEditor } from 'ajjya-ajte-canvas-aditor';
+const AJTEAdminEditor = AJTEEditor.AJTEAdminEditor;
+const AJTEUserEditor = AJTEEditor.AJTEUserEditor;
 ```
 ---
 > Please take into consideration to use the modern version and add polyfills later to your final bundle!
