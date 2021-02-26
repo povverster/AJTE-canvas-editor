@@ -1,0 +1,28 @@
+{
+  "name": "ajjya-ajte-canvas-aditor",
+  "version": "1.0.0",
+  "description": "Javascript canvas editor based on konva.js (https://konvajs.org/)",
+  "main": "ajteeditor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ajjya/AJTE-canvas-editor.git"
+  },
+  "keywords": [
+    "konva.js",
+    "text-editpr"
+  ],
+  "author": "Vladyslava Prykhodko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ajjya/AJTE-canvas-editor.git/issues"
+  },
+  "homepage": "https://github.com/Ajjya/AJTE-canvas-editor#readme",
+  "dependencies": {
+    "@simonwep/pickr": "^1.8.0",
+    "font-awesome": "^4.7.0",
+    "konva": "^7.2.4"
+  }
+}

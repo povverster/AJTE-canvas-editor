@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>AJTE canvas editor usage</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../node_modules/@simonwep/pickr/dist/themes/classic.min.css"/>
+  <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css"/>
+	<link href="../ajteditor.min.css" rel="stylesheet">
+	
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<link href="css/ie.css" rel="stylesheet">
+	<![endif]-->
+</head>
+<body>
+  <div id="ajte"></div>
+
+  <script type="text/javascript">
+    window.baseUrl = '';
+    window.code = "";
+    window.title = "";
+    window.category = "";
+    window.templateId = 0;
+    window.customFields = {
+      description: {
+        name: "description",
+        label: "Text for Social Media",
+        comment: '<span class="comment_text">500 characters max.</span>',
+        value: "some value if needed",
+        validation: {
+          "max": 500
+        }
+      }
+    }
+  </script>
+  <script type="text/javascript" src="../node_modules/konva/konva.min.js"></script>
+  <script src="../node_modules/@simonwep/pickr/dist/pickr.min.js"></script>
+  <script type="text/javascript" src="../ajteditor.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
