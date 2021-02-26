@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     title: title,
     category: category,
     templateId: templateId,
+    scriptUrl: baseUrl,
     saveInfo: {
       requestHeaders: [
         {'X-CSRF-TOKEN': csrf}
