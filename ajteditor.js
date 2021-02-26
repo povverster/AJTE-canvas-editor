@@ -1495,7 +1495,7 @@
 
     function AJTEImage(args, AJTEEditor){
         AJTEElement.call(this, args, AJTEEditor);
-        this.src = args && args.src ? args.src : this.AJTEEditor.scriptUrl + '/images/no_image_available.png';
+        this.src = args && args.src ? args.src : this.AJTEEditor.notAvaliableImageSrc;
         this.x = args && args.x ? args.x : 0;
         this.y = args && args.y ? args.y: 0;
         this.id = args && args.id ? args.id : 'image-' + Date.now();
@@ -1508,6 +1508,7 @@
             self.AJTEEditor.disable();
             imageObj.src = this.src;
             imageObj.onload = function () {
+
                 self.el = new Konva.Image({
                     id: self.id,
                     x: self.x,
@@ -1917,7 +1918,8 @@
             url: args.saveInfo && args.saveInfo.url ? args.saveInfo.url : '',
             requestHeaders: args.saveInfo && args.saveInfo.requestHeaders ? args.saveInfo.requestHeaders : [],
         };
-        this.scriptUrl = args.scriptUrl ? args.scriptUrl : '';
+
+        this.notAvaliableImageSrc = args.notAvaliableImageSrc ? args.notAvaliableImageSrc : "";
         this.stage = null;
         this.status = 'history';
         this.store = {
@@ -2577,8 +2579,11 @@
 
         xhr.open('POST', this.saveInfo.url, true);
         if(this.saveInfo.requestHeaders && this.saveInfo.requestHeaders.length){
-            this.saveInfo.requestHeaders.forEach(function(value, key){
-                xhr.setRequestHeader(key, value);
+            this.saveInfo.requestHeaders.forEach(function(header){
+                for(var key in header){
+                    var value = header[key];
+                    xhr.setRequestHeader(key, value);
+                }
             })
         }
         xhr.send(formData);
@@ -2777,6 +2782,7 @@
                 </div>  \
                 <div id="ajteloader">   \
                     <div id="ajteloaderpic"> \
+                        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div> \
                     </div>  \
                 </div>  \
             </div>';
