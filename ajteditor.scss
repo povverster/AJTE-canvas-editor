@@ -91,6 +91,10 @@ a:hover{
     margin-right: 5px;
 }
 
+.ajterbar .fa-undo{
+    transform: scaleX(-1);
+}
+
 .ajtebar .switcher > div > .fa{
     margin: 12px;
 }
@@ -219,10 +223,6 @@ a:hover{
 #ajteditor .pickr .pcr-button{
     width: 40px;
     height: 40px;
-}
-
-#ajteditor .fa-redo{
-    transform: scaleX(-1);
 }
 
 .switcher{
@@ -488,9 +488,13 @@ a:hover{
     margin-bottom: 10px;
 }
 
-.ajtefirstbtnline a:nth-child(1){
+.ajtefirstbtnline a{
     flex-grow: 1;
     margin-right: 10px;
+}
+
+.ajtefirstbtnline a:last-child{
+    margin-right: 0px;
 }
 
 .ajtesecondbtnline a:nth-child(2){

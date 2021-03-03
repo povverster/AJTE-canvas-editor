@@ -1,6 +1,6 @@
 {
   "name": "ajjya-ajte-canvas-aditor",
-  "version": "1.0.10",
+  "version": "1.0.20",
   "description": "Javascript canvas editor based on konva.js (https://konvajs.org/)",
   "main": "ajteditor.js",
   "sass": "ajteditor.scss",
