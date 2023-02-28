@@ -1,5 +1,5 @@
 {
-  "name": "ajjya-ajte-canvas-aditor",
+  "name": "pvr-ajte-canvas-aditor",
   "version": "1.0.20",
   "description": "Javascript canvas editor based on konva.js (https://konvajs.org/)",
   "main": "ajteditor.js",
@@ -10,18 +10,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Ajjya/AJTE-canvas-editor.git"
+    "url": "git+https://github.com/povverster/AJTE-canvas-editor.git"
   },
   "keywords": [
     "konva.js",
     "text-editpr"
   ],
-  "author": "Vladyslava Prykhodko",
+  "author": "Romanenko Denis",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Ajjya/AJTE-canvas-editor.git/issues"
+    "url": "https://github.com/povverster/AJTE-canvas-editor.git/issues"
   },
-  "homepage": "https://github.com/Ajjya/AJTE-canvas-editor#readme",
+  "homepage": "https://github.com/povverster/AJTE-canvas-editor#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@simonwep/pickr": "^1.8.0",

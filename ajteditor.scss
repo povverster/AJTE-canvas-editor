@@ -1,15 +1,15 @@
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-@import '@simonwep/pickr/src/scss/themes/classic';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@simonwep/pickr/src/scss/themes/classic";
 
-#ajteditor{
-    margin: 0;
-    color: #110f24;
-    background-color: white;
-    font: 16px/1.6 'Lato', sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-width: 1315px;
-    overflow-X: auto;
+#ajteditor {
+  margin: 0;
+  color: #110f24;
+  background-color: white;
+  font: 16px/1.6 "Lato", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-width: 1315px;
+  overflow-x: auto;
 }
 
 #ajteditor input[type="text"],
@@ -19,340 +19,339 @@
 #ajteditor select,
 #ajteditor input[type="submit"],
 #ajteditor button {
-    font: 16px/1 'Lato', sans-serif;
-    box-sizing: border-box;
-    border-radius: 4px;
-    padding: 10px 10px 10px 10px;
-    outline: 0;
-    max-width: 600px;
+  font: 16px/1 "Lato", sans-serif;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 10px 10px 10px 10px;
+  outline: 0;
+  max-width: 600px;
 }
 
-#ajteditor input[type="number"]{
-    padding: 10px 3px 10px 10px;
+#ajteditor input[type="number"] {
+  padding: 10px 3px 10px 10px;
 }
-
 
 #ajteaside input[type="text"],
 #ajteaside input[type="email"],
 #ajteaside input[type="number"],
 #ajteaside textarea,
-#ajteaside select{
-    width: 100%;
-    background: #F6F6F9;
-    border: 1px solid #ECECEE;
+#ajteaside select {
+  width: 100%;
+  background: #f6f6f9;
+  border: 1px solid #ececee;
 }
 
-.ajte-input-wrap{
-    margin-bottom: 15px;
+.ajte-input-wrap {
+  margin-bottom: 15px;
 }
 
-.ajte-input-wrap label{
-    color: #110F24;
-    font-size: 0.9rem;
-    font-weight: bold;
+.ajte-input-wrap label {
+  color: #110f24;
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
-#ajteditor select{
-    padding: 9px 15px 9px 15px; 
+#ajteditor select {
+  padding: 9px 15px 9px 15px;
 }
 
 #ajteditor textarea {
   min-height: 200px;
 }
 
-#ajtecontent{
-    display: flex;
-    align-items: stretch;
-    flex: 1;
-    position: relative;
+#ajtecontent {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  position: relative;
 }
 
-#ajteaside{
-    width: 300px;
-    padding: 10px;
-    border-right: 1px solid #ececee;
+#ajteaside {
+  width: 300px;
+  padding: 10px;
+  border-right: 1px solid #ececee;
 }
 
-#ajtemainbar{
-    flex: 1;
+#ajtemainbar {
+  flex: 1;
 }
 
-a{
-    color: #110f24;
-    text-decoration: none;
+a {
+  color: #110f24;
+  text-decoration: none;
 }
 
-a:hover{
-    color: #110f24;
-    text-decoration: none;
+a:hover {
+  color: #110f24;
+  text-decoration: none;
 }
 
-.ajtebar .fa{
-    margin-right: 5px;
+.ajtebar .fa {
+  margin-right: 5px;
 }
 
-.ajterbar .fa-undo{
-    transform: scaleX(-1);
+.ajterbar .fa-undo {
+  transform: scaleX(-1);
 }
 
-.ajtebar .switcher > div > .fa{
-    margin: 12px;
+.ajtebar .switcher > div > .fa {
+  margin: 12px;
 }
 
-.ajte-container{
-    padding: 0 1em;
+.ajte-container {
+  padding: 0 1em;
 }
 
-.ajte-barcontainer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
+.ajte-barcontainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
 
-#ajte-bar-disabler{
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    width: 100%;
-    height: 100%;
+#ajte-bar-disabler {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
 }
 
-.ajte-list{
-    display: flex;
-    align-items: center;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.ajte-list {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-.ajte-list li{
-    list-style-type: none;
-    margin: 0;
-    cursor: pointer;
+.ajte-list li {
+  list-style-type: none;
+  margin: 0;
+  cursor: pointer;
 }
 
-.ajte-list li a{
-    display: block;
-    padding: 10px 20px;
-    text-decoration: none;
+.ajte-list li a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
 }
 
 .ajte-list li a:hover,
-.ajte-list li.active a{
-    background-color: #ececee;
-    text-decoration: none;
+.ajte-list li.active a {
+  background-color: #ececee;
+  text-decoration: none;
 }
 
-.ajte-menu-has-children{
-    position: relative;
+.ajte-menu-has-children {
+  position: relative;
 }
 
-.ajte-menu-has-children>a>.fa-sort-down{
-    margin-left: 10px;
+.ajte-menu-has-children > a > .fa-sort-down {
+  margin-left: 10px;
 }
 
-.fa-sort-down:before{
-    position: relative;
-    top: -2px;
+.fa-sort-down:before {
+  position: relative;
+  top: -2px;
 }
 
-.ajte-list .ajte-menu-has-children>a{
-    padding-right: 10px;
+.ajte-list .ajte-menu-has-children > a {
+  padding-right: 10px;
 }
 
-.ajte-picker-wrap{
-    display: flex;
-    align-items: center;
+.ajte-picker-wrap {
+  display: flex;
+  align-items: center;
 }
 
-.ajte-picker-wrap span{
-    margin-right: 5px;
+.ajte-picker-wrap span {
+  margin-right: 5px;
 }
 
-.ajte-submenu{
-    position: absolute;
-    top: 40px;
-    left: 0;
-    border: 1px solid #ececee;
-    border-radius: 4px;
-    background-color: white;
-    padding: 5px 0;
-    min-width: 110px;
-    display: none;
-    z-index: 1;
+.ajte-submenu {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  border: 1px solid #ececee;
+  border-radius: 4px;
+  background-color: white;
+  padding: 5px 0;
+  min-width: 110px;
+  display: none;
+  z-index: 1;
 }
 
-.ajte-submenu li{
-    padding: 0;
+.ajte-submenu li {
+  padding: 0;
 }
 
-.ajte-menu-has-children:hover .ajte-submenu{
-    display: block;
+.ajte-menu-has-children:hover .ajte-submenu {
+  display: block;
 }
 
-.ajte-rightside .ajte-submenu li{
-    margin-left: 0;
+.ajte-rightside .ajte-submenu li {
+  margin-left: 0;
 }
 
-.ajte-rightside .ajte-submenu li a{
-    display: block;
-    padding: 5px 35px 5px 15px;
+.ajte-rightside .ajte-submenu li a {
+  display: block;
+  padding: 5px 35px 5px 15px;
 }
 
 .ajte-submenu li a:hover {
-    background-color: #ececee;
+  background-color: #ececee;
 }
 
-.ajte-barline-border{
-    padding: 15px 0;
-    border-top: 1px solid #ececee;
+.ajte-barline-border {
+  padding: 15px 0;
+  border-top: 1px solid #ececee;
 }
 
-.ajte-infoline-border{
-    border-top: 1px solid #ececee;
-    border-bottom: 1px solid #ececee;
+.ajte-infoline-border {
+  border-top: 1px solid #ececee;
+  border-bottom: 1px solid #ececee;
 }
 
-.ajte-font-size{
-    width: 100px;
+.ajte-font-size {
+  width: 100px;
 }
 
-#ajteditor .pickr .pcr-button{
-    width: 40px;
-    height: 40px;
+#ajteditor .pickr .pcr-button {
+  width: 40px;
+  height: 40px;
 }
 
-.switcher{
-    position: relative;
-    width: 39px;
-    height: 39px;
-    border: 1px solid #cdcdcd;
-    border-radius: 4px;
+.switcher {
+  position: relative;
+  width: 39px;
+  height: 39px;
+  border: 1px solid #cdcdcd;
+  border-radius: 4px;
 }
 
-.switcher > div.active{
-    display: block;
+.switcher > div.active {
+  display: block;
 }
 
-.switcher > div{
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #ececee;
-    display: none;
-    border-radius: 4px;
+.switcher > div {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ececee;
+  display: none;
+  border-radius: 4px;
 }
 
-.switcher > div > .fa{
-    margin: 12px;
+.switcher > div > .fa {
+  margin: 12px;
 }
 
-.ajte-choose{
-    display: flex;
-    width: 39px;
-    height: 39px;
-    border: 1px solid #ececee;
-    border-radius: 4px;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+.ajte-choose {
+  display: flex;
+  width: 39px;
+  height: 39px;
+  border: 1px solid #ececee;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
-.ajte-choose.active{
-    background-color: #ececee;
-    border: 1px solid #cdcdcd;
+.ajte-choose.active {
+  background-color: #ececee;
+  border: 1px solid #cdcdcd;
 }
 
-.ajte-rightside{
-    display: flex;
+.ajte-rightside {
+  display: flex;
 }
 
-.ajte-btn{
-    background-color: #2993e9;
-    display: inline-block;
-    outline: none;
-    padding: 10px 20px;
-    color: white;
-    border-radius: 4px;
-    border: 0;
-    text-align: center;
+.ajte-btn {
+  background-color: #2993e9;
+  display: inline-block;
+  outline: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 4px;
+  border: 0;
+  text-align: center;
 }
- 
+
 .ajte-btn span,
-.ajte-btn i{
-    color: white;
+.ajte-btn i {
+  color: white;
 }
 
 .ajte-btn:hover,
-.ajte-list li .ajte-btn:hover{
-    background-color: rgb(8, 116, 204);
-    color: white;
-    transition: 0.3s;
+.ajte-list li .ajte-btn:hover {
+  background-color: rgb(8, 116, 204);
+  color: white;
+  transition: 0.3s;
 }
 
-.ajte-btn i{
-    margin-right: 5px;
+.ajte-btn i {
+  margin-right: 5px;
 }
 
-.ajte-barseccontainer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 61px;
+.ajte-barseccontainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 61px;
 }
 
-#ajtebarcontent li{
-    padding: 10px 10px;
+#ajtebarcontent li {
+  padding: 10px 10px;
 }
 
-.hidden{
-    display: none;
+.hidden {
+  display: none;
 }
 
 #ajte-context-menu,
 #ajte-text-context-menu {
-    display: none;
-    position: absolute;
-    background-color: white;
-    box-shadow: 0 0 5px grey;
-    border-radius: 3px;
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 0 5px grey;
+  border-radius: 3px;
 }
 
 #ajte-context-menu button,
 #ajte-text-context-menu button {
-    width: 100%;
-    background-color: white;
-    border: none;
-    border-radius: 0;
-    margin: 0;
-    padding: 10px;
-    text-align: left;
-    cursor: pointer;
+  width: 100%;
+  background-color: white;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
 }
 
 #ajte-context-menu button:hover,
-#ajte-text-context-menu button:hover{
-    background-color: lightgray;
+#ajte-text-context-menu button:hover {
+  background-color: lightgray;
 }
 
-#ajteloader{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: none;
-    background-color: rgba(255,255,255,0.5);
+#ajteloader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 #ajteloaderpic .lds-spinner {
@@ -449,98 +448,98 @@ a:hover{
   }
 }
 
-.ajte-list-buttons li{
-    margin-left: 15px;
-} 
+.ajte-list-buttons li {
+  margin-left: 15px;
+}
 
-.ajte-btn-dark{
-    background-color: #285364;
-    color:white;
+.ajte-btn-dark {
+  background-color: #285364;
+  color: white;
 }
 
 .ajte-btn-dark:hover,
-.ajte-list li .ajte-btn.ajte-btn-dark:hover{
-    background-color: #458ba6;
-    color:white;
+.ajte-list li .ajte-btn.ajte-btn-dark:hover {
+  background-color: #458ba6;
+  color: white;
 }
 
-.ajte-btn-green{
-    background-color: #0C9E84;
+.ajte-btn-green {
+  background-color: #0c9e84;
 }
 
 .ajte-btn-green:hover,
-.ajte-list li .ajte-btn.ajte-btn-green:hover{
-    background-color: #09705d;
+.ajte-list li .ajte-btn.ajte-btn-green:hover {
+  background-color: #09705d;
 }
 
-.aside-btn-wrap{
-    flex-direction: column;
-    display: flex;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    font-size: 14px;
+.aside-btn-wrap {
+  flex-direction: column;
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
 }
 
-.aside-btn-wrap li{
-    width: 100%;
-    display: flex;
-    margin-bottom: 10px;
+.aside-btn-wrap li {
+  width: 100%;
+  display: flex;
+  margin-bottom: 10px;
 }
 
-.ajtefirstbtnline a{
-    flex-grow: 1;
-    margin-right: 10px;
+.ajtefirstbtnline a {
+  flex-grow: 1;
+  margin-right: 10px;
 }
 
-.ajtefirstbtnline a:last-child{
-    margin-right: 0px;
+.ajtefirstbtnline a:last-child {
+  margin-right: 0px;
 }
 
-.ajtesecondbtnline a:nth-child(2){
-    flex-grow: 2;
+.ajtesecondbtnline a:nth-child(2) {
+  flex-grow: 2;
 }
 
-.ajte-padding{
-    width: 55px;
-    margin-right: 10px;
+.ajte-padding {
+  width: 55px;
+  margin-right: 10px;
 }
 
-.ajte-stage{
-    width: 70px;
-    margin-right: 10px;
+.ajte-stage {
+  width: 70px;
+  margin-right: 10px;
 }
 
-.konvajs-content{
-    position: relative;
+.konvajs-content {
+  position: relative;
 }
-.ajte-konva-placeholder{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #F6F6F9;
-    z-index: 0;
-}
-
-#ajtemainbar{
-    position: relative;
+.ajte-konva-placeholder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #f6f6f9;
+  z-index: 0;
 }
 
-.ajte-image-change{
-    opacity: 0.9;
-    position: absolute;
-    cursor: pointer;
+#ajtemainbar {
+  position: relative;
+}
+
+.ajte-image-change {
+  opacity: 0.9;
+  position: absolute;
+  cursor: pointer;
 }
 
 .ajte-image-change::after {
-    content: "+";
-    top: 0;
-    right: -22px;
-    position: absolute;
-    display: block;
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    padding: 5px 7px;
-    background-color: #285364;
+  content: "+";
+  top: 0;
+  right: -22px;
+  position: absolute;
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  padding: 5px 7px;
+  background-color: #285364;
 }

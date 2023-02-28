@@ -7,20 +7,20 @@ Also you need to use FontFaceObserver if you need to use not standart fonts. (ht
 
 Install via npm:
 ```shell
-$ npm install ajjya-ajte-canvas-aditor
+$ npm install pvr-ajte-canvas-aditor
 ```
 
 Install via yarn:
 ```shell
-$ yarn add ajjya-ajte-canvas-aditor
+$ yarn add pvr-ajte-canvas-aditor
 ```
 
 Include code and style:
 ```js
 
-import 'ajjya-ajte-canvas-aditor/ajteditor.scss';
+import 'pvr-ajte-canvas-aditor/ajteditor.scss';
 
-import JTEEditor from 'ajjya-ajte-canvas-aditor';
+import JTEEditor from 'pvr-ajte-canvas-aditor';
 const AJTEAdminEditor = AJTEEditor.AJTEAdminEditor;
 const AJTEUserEditor = AJTEEditor.AJTEUserEditor;
 ```
@@ -141,5 +141,5 @@ All parametrs are not requiered.
  * init_cb - fires after editor inited elements, you can use it for loading fonts.
 
 
-You can get more information from example https://github.com/Ajjya/AJTE-canvas-editor/example
+You can get more information from example https://github.com/povverster/AJTE-canvas-editor/example
 
