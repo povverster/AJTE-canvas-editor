@@ -1,5 +1,5 @@
 {
-  "name": "pvr-ajte-canvas-aditor",
+  "name": "pvr-ajte-canvas-editor",
   "version": "1.0.0",
   "description": "Javascript canvas editor based on konva.js (https://konvajs.org/)",
   "main": "ajteditor.js",

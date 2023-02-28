@@ -7,20 +7,20 @@ Also you need to use FontFaceObserver if you need to use not standart fonts. (ht
 
 Install via npm:
 ```shell
-$ npm install pvr-ajte-canvas-aditor
+$ npm install pvr-ajte-canvas-editor
 ```
 
 Install via yarn:
 ```shell
-$ yarn add pvr-ajte-canvas-aditor
+$ yarn add pvr-ajte-canvas-editor
 ```
 
 Include code and style:
 ```js
 
-import 'pvr-ajte-canvas-aditor/ajteditor.scss';
+import 'pvr-ajte-canvas-editor/ajteditor.scss';
 
-import JTEEditor from 'pvr-ajte-canvas-aditor';
+import JTEEditor from 'pvr-ajte-canvas-editor';
 const AJTEAdminEditor = AJTEEditor.AJTEAdminEditor;
 const AJTEUserEditor = AJTEEditor.AJTEUserEditor;
 ```
