@@ -2486,6 +2486,7 @@
     if (ajteMode == 'dev') {
       console.info('AJTEEditor:fitStageIntoParentContainer');
     }
+
     var container = document.getElementById('ajtemainbar');
     var containerWidth = container.offsetWidth;
     var containerHeight = container.offsetHeight;
@@ -2497,6 +2498,7 @@
     // // this.stage.width(stageWidth * scale);
     // // this.stage.height(stageHeight * scale);
     // // this.stage.scale({ x: scale, y: scale });
+
     this.stage.draw();
   };
 
@@ -2722,6 +2724,7 @@
     if (this.saveInfo.url) {
       this.sendToServer(storejson, 'draft', type, cb);
     }
+
     return storejson;
   };
 
@@ -2736,6 +2739,7 @@
     if (this.saveInfo.url) {
       this.sendToServer(storejson, 'approved', type, cb);
     }
+
     return storejson;
   };
 
@@ -2750,8 +2754,18 @@
 
     var dataURL = this.stage.toDataURL({ pixelRatio: 1 });
 
-    this.fitStageIntoParentContainer();
+    // !!!!!!!!!!!!!!!!!!!! TEMPORARILY DISABLED !!!!!!!!!!!!!!!!!!!!!!!
+    // It can be a source of issue when canvas size becomes extra large.
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // this.fitStageIntoParentContainer();
+
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     this.showLabels();
+
     return dataURL;
   };
 
