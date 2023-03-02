@@ -1938,16 +1938,16 @@
     this.stroke = args && args.stroke ? args.stroke : 'black';
     this.strokeWidth = args && args.strokeWidth ? args.strokeWidth : 4;
     this.radius = args && args.radius ? args.radius : 100;
-    (this.points =
-      args.line && args.line.points ? args.line.points : [0, 0, 100, 0]),
-      (this.lineJoin =
-        args.line && args.line.lineJoin ? args.line.lineJoin : 'round');
+    this.points =
+      args.line && args.line.points ? args.line.points : [0, 0, 100, 0];
+    this.lineJoin =
+      args.line && args.line.lineJoin ? args.line.lineJoin : 'round';
     this.lineCap = args.line && args.line.lineCap ? args.line.lineCap : 'round';
     this.x = args && args.x ? args.x : 0;
     this.y = args && args.y ? args.y : this.strokeWidth;
     this.rotation = args && args.rotation ? args.rotation : 0;
-    this.scaleX = args && args.scaleX ? args.scaleX : 0;
-    this.scaleY = args && args.scaleY ? args.scaleY : 0;
+    this.scaleX = args && args.scaleX ? args.scaleX : 1;
+    this.scaleY = args && args.scaleY ? args.scaleY : 1;
     this.type = 'line';
     this.id = args && args.id ? args.id : 'line-' + Date.now();
 
