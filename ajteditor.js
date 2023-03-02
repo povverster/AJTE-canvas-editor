@@ -1327,6 +1327,11 @@
     this.fill = args && args.fill ? args.fill : 'black';
     this.x = args && args.x ? args.x : 0;
     this.y = args && args.y ? args.y : 0;
+    this.rotation = args && args.rotation ? args.rotation : 0;
+    this.scaleX = args && args.scaleX ? args.scaleX : 1;
+    this.scaleY = args && args.scaleY ? args.scaleY : 1;
+    this.skewX = args && args.skewX ? args.skewX : 0;
+    this.skewY = args && args.skewY ? args.skewY : 0;
     this.type = this.type ? this.type : 'text';
     this.isBold = args && args.isBold ? args.isBold : false;
     this.isItalic = args && args.isItalic ? args.isItalic : false;
@@ -1343,20 +1348,33 @@
     this.id = args && args.id ? args.id : 'text-' + Date.now();
 
     this.init = function () {
-      var textDecoration = this.isUnderline ? 'underline' : 'none';
-      var fontStyle = '';
-      var fontStyleArr = [];
-      if (this.isBold) fontStyleArr.push('bold');
-      if (this.isItalic) fontStyleArr.push('italic');
+      const textDecoration = this.isUnderline ? 'underline' : 'none';
+      const fontStyle = '';
+      const fontStyleArr = [];
+
+      if (this.isBold) {
+        fontStyleArr.push('bold');
+      }
+
+      if (this.isItalic) {
+        fontStyleArr.push('italic');
+      }
+
       fontStyle = fontStyleArr.join(' ');
 
-      var self = this;
+      const self = this;
+
       self.el = new Konva.Text({
         id: self.id,
         type: self.type,
         text: self.text,
         x: self.x,
         y: self.y,
+        rotation: self.rotation,
+        scaleX: self.scaleX,
+        scaleY: self.scaleY,
+        skewX: self.skewX,
+        skewY: self.skewY,
         fontSize: self.fontSize,
         fontFamily: self.fontFamily,
         fill: self.fill,
@@ -1398,17 +1416,17 @@
   AJTEText.prototype = Object.create(AJTEElement.prototype);
 
   AJTEText.prototype.editText = function () {
-    var stageBox = this.stage.container().getBoundingClientRect();
+    const stageBox = this.stage.container().getBoundingClientRect();
 
-    var self = this;
+    const self = this;
 
-    var textPosition = self.el.absolutePosition();
+    const textPosition = self.el.absolutePosition();
 
     self.el.hide();
     self.transformer.hide();
     self.layer.draw();
 
-    var areaPosition = {
+    const areaPosition = {
       x: stageBox.left + textPosition.x,
       y: stageBox.top + textPosition.y
     };
@@ -1597,17 +1615,24 @@
 
   function AJTEImage(args, AJTEEditor) {
     AJTEElement.call(this, args, AJTEEditor);
+
     this.src =
       args && args.src ? args.src : this.AJTEEditor.notAvaliableImageSrc;
     this.x = args && args.x ? args.x : 0;
     this.y = args && args.y ? args.y : 0;
+    this.rotation = args && args.rotation ? args.rotation : 0;
+    this.scaleX = args && args.scaleX ? args.scaleX : 1;
+    this.scaleY = args && args.scaleY ? args.scaleY : 1;
+    this.skewX = args && args.skewX ? args.skewX : 0;
+    this.skewY = args && args.skewY ? args.skewY : 0;
     this.id = args && args.id ? args.id : 'image-' + Date.now();
     this.type = 'image';
 
     this.init = function () {
-      var imageObj = new Image();
+      const imageObj = new Image();
       // imageObj.crossOrigin = 'Anonymous';
-      var self = this;
+      const self = this;
+
       self.AJTEEditor.disable();
       imageObj.src = this.src;
       imageObj.onload = function () {
@@ -1615,6 +1640,11 @@
           id: self.id,
           x: self.x,
           y: self.y,
+          rotation: self.rotation,
+          scaleX: self.scaleX,
+          scaleY: self.scaleY,
+          skewX: self.skewX,
+          skewY: self.skewY,
           image: imageObj,
           index: self.index,
           label: self.label,
@@ -1667,10 +1697,14 @@
     }
 
     if (this.AJTEEditor instanceof AJTEUserEditor) {
-      var scale = this.el.scaleX();
-      if (scale == 1) scale = this.el.scaleY();
-      var width = this.el.width() * scale;
-      var height = this.el.height() * scale;
+      const scale = this.el.scaleX();
+
+      if (scale == 1) {
+        scale = this.el.scaleY();
+      }
+
+      const width = this.el.width() * scale;
+      const height = this.el.height() * scale;
 
       this.el.setAttrs({
         width: width,
@@ -1690,9 +1724,9 @@
   };
 
   AJTEImage.prototype.setLabelPosition = function () {
-    var position = this.el.getClientRect();
-    var id = 'label_' + this.el.attrs.id;
-    var el = document.getElementById(id);
+    const position = this.el.getClientRect();
+    const id = 'label_' + this.el.attrs.id;
+    const el = document.getElementById(id);
 
     el.style.top = position.y + 'px';
     el.style.left = position.x + position.width + 'px';
@@ -1703,12 +1737,12 @@
       console.info('ajteImage:changeSrc');
     }
 
-    var self = this;
-    var position = this.el.getClientRect();
-    var imageObj2 = new Image();
+    const self = this;
+    const position = this.el.getClientRect();
+    const imageObj2 = new Image();
 
     imageObj2.onload = function () {
-      var koef = imageObj2.naturalWidth / position.width;
+      const koef = imageObj2.naturalWidth / position.width;
       imageObj2.naturalHeight;
       self.el.image(imageObj2);
       self.el.attrs.src = src;
