@@ -2626,7 +2626,16 @@
     this.currentElId = id;
     this.focusElement(id);
 
-    var el = this.store.elements[id].el;
+    if (
+      !this.store ||
+      !this.store.elements ||
+      !this.store.elements[id] ||
+      !this.store.elements[id].el
+    ) {
+      return;
+    }
+
+    const el = this.store.elements[id].el;
 
     if (this.bar) {
       // this.bar.setBarArgs(el.attrs, this.store[id].type);
