@@ -2446,37 +2446,57 @@
   };
 
   AJTEEditor.prototype.unbindShape = function (self, id) {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:unbindShape');
     }
+
     if (self.store.elements[id].el.attrs.bind_id) {
       self.store.elements[id].el.attrs.bind_id = 0;
     }
   };
 
   AJTEEditor.prototype.setUpContextMenu = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:setUpContextMenu');
     }
-    var menuNode = document.getElementById('ajte-context-menu');
-    var textMenuNode = document.getElementById('ajte-text-context-menu');
-    var currentElement = null;
-    var self = this;
+
+    const menuNode = document.getElementById('ajte-context-menu');
+    const textMenuNode = document.getElementById('ajte-text-context-menu');
+    const currentElement = null;
+    const self = this;
 
     document.getElementById('delete-button').addEventListener('click', () => {
-      self.store.elements[currentElement].deleteElement();
+      if (
+        currentElement &&
+        self.store &&
+        self.store.elements &&
+        self.store.elements[currentElement]
+      ) {
+        self.store.elements[currentElement].deleteElement();
+      }
     });
 
     document.getElementById('delete-button2').addEventListener('click', () => {
-      self.store.elements[currentElement].deleteElement();
+      if (
+        currentElement &&
+        self.store &&
+        self.store.elements &&
+        self.store.elements[currentElement]
+      ) {
+        self.store.elements[currentElement].deleteElement();
+      }
     });
 
     document.getElementById('bind-shape').addEventListener('click', () => {
-      self.markShapes(currentElement);
+      if (currentElement) {
+        self.markShapes(currentElement);
+      }
     });
 
     document.getElementById('unbind-shape').addEventListener('click', () => {
-      self.unbindShape(currentElement);
+      if (currentElement) {
+        self.unbindShape(currentElement);
+      }
     });
 
     window.addEventListener('click', () => {
@@ -2495,14 +2515,14 @@
         return;
       }
 
-      var shape = e.target;
+      const shape = e.target;
       currentElement = shape.attrs.id;
       // self.chooseElement(shape.attrs.id);
 
-      var containerRect = self.stage.container().getBoundingClientRect();
-      var top =
+      const containerRect = self.stage.container().getBoundingClientRect();
+      const top =
         containerRect.top + self.stage.getPointerPosition().y + 4 + 'px';
-      var left =
+      const left =
         containerRect.left + self.stage.getPointerPosition().x + 4 + 'px';
       if (shape.constructor.name == 'Text') {
         textMenuNode.style.display = 'initial';
@@ -2518,19 +2538,20 @@
   };
 
   AJTEEditor.prototype.concatShapes = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:concatShapes');
     }
-    var shapes = ['rect', 'circle', 'line', 'ellipse'];
 
-    var result_data = {};
+    const shapes = ['rect', 'circle', 'line', 'ellipse'];
 
-    for (var i = 0; i < shapes.length; i++) {
+    let result_data = {};
+
+    for (let i = 0; i < shapes.length; i++) {
       if (!this.args[shapes[i]]) break;
-      var one_shape_data = JSON.parse(JSON.stringify(this.args[shapes[i]]));
+      const one_shape_data = JSON.parse(JSON.stringify(this.args[shapes[i]]));
       result_data = JSON.parse(JSON.stringify(this.args.shape));
 
-      for (var j in one_shape_data) {
+      for (let j in one_shape_data) {
         result_data[j] = one_shape_data[j];
       }
 
@@ -2539,27 +2560,35 @@
   };
 
   AJTEEditor.prototype.focusElement = function (id) {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:focusElement');
     }
-    var self = this;
+
+    const self = this;
     self.currentElId = id;
 
-    for (var i in self.store.elements) {
-      self.store.elements[i].blur();
-    }
+    if (self.store && self.store.elements) {
+      for (let i in self.store.elements) {
+        if (self.store.elements[i]) {
+          self.store.elements[i].blur();
+        }
+      }
 
-    self.store.elements[self.currentElId].focus();
+      if (self.currentElId >= 0 && self.store.elements[self.currentElId]) {
+        self.store.elements[self.currentElId].focus();
+      }
+    }
   };
 
   AJTEEditor.prototype.fitStageIntoParentContainer = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:fitStageIntoParentContainer');
     }
 
-    var container = document.getElementById('ajtemainbar');
-    var containerWidth = container.offsetWidth;
-    var containerHeight = container.offsetHeight;
+    const container = document.getElementById('ajtemainbar');
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight;
+
     this.stage.width(containerWidth);
     this.stage.height(containerHeight);
 
@@ -2573,9 +2602,10 @@
   };
 
   AJTEEditor.prototype.changeElementStyle = function (args) {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:changeElementStyle');
     }
+
     if (args.name === undefined || args.value === undefined) {
       console.error('No arguments for changing elements');
       return;
@@ -2587,7 +2617,7 @@
   };
 
   AJTEEditor.prototype.chooseElement = function (id) {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:chooseElement');
     }
 
