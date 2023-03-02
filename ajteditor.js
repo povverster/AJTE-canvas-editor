@@ -1693,6 +1693,7 @@
     var position = this.el.getClientRect();
     var id = 'label_' + this.el.attrs.id;
     var el = document.getElementById(id);
+
     el.style.top = position.y + 'px';
     el.style.left = position.x + position.width + 'px';
   };
@@ -1719,6 +1720,7 @@
       self.transformer.forceUpdate();
       self.layer.draw();
     };
+
     imageObj2.src = src;
   };
 
@@ -1749,7 +1751,7 @@
     this.id = args && args.id ? args.id : 'rect-' + Date.now();
 
     this.init = function () {
-      var self = this;
+      const self = this;
 
       this.el = new Konva.Rect({
         id: self.id,
@@ -1793,11 +1795,12 @@
   }
 
   AJTERect.prototype.onTransform = function () {
-    var self = this;
-    var scaleX = this.el.attrs.scaleX;
-    var scaleY = this.el.attrs.scaleY;
-    var scaledWidth = self.el.attrs.width * scaleX;
-    var scaledHeight = self.el.attrs.height * scaleY;
+    const self = this;
+    const scaleX = this.el.attrs.scaleX;
+    const scaleY = this.el.attrs.scaleY;
+    const scaledWidth = self.el.attrs.width * scaleX;
+    const scaledHeight = self.el.attrs.height * scaleY;
+
     self.el.setAttrs({
       width: scaledWidth,
       height: scaledHeight,
@@ -1811,17 +1814,22 @@
 
   function AJTECircle(args, AJTEEditor) {
     AJTEElement.call(this, args, AJTEEditor);
+
     this.fill = args && args.fill ? args.fill : 'blue';
     this.stroke = args && args.stroke ? args.stroke : 'black';
     this.strokeWidth = args && args.strokeWidth ? args.strokeWidth : 4;
     this.radius = args && args.radius ? args.radius : 100;
     this.x = args && args.x ? args.x : 100;
     this.y = args && args.y ? args.y : 100;
+    this.rotation = args && args.rotation ? args.rotation : 0;
+    this.skewX = args && args.skewX ? args.skewX : 0;
+    this.skewY = args && args.skewY ? args.skewY : 0;
     this.type = 'circle';
     this.id = args && args.id ? args.id : 'circle-' + Date.now();
 
     this.init = function () {
-      var self = this;
+      const self = this;
+
       this.el = new Konva.Circle({
         id: self.id,
         x: self.x,
@@ -1830,6 +1838,9 @@
         fill: self.fill,
         stroke: self.stroke,
         strokeWidth: self.strokeWidth,
+        rotation: self.rotation,
+        skewX: self.skewX,
+        skewY: self.skewY,
         index: self.index,
         label: self.label,
         value: self.value,
@@ -1845,9 +1856,10 @@
   }
 
   AJTECircle.prototype.onTransform = function () {
-    var self = this;
-    var scaleX = this.el.attrs.scaleX;
-    var scaledRadius = self.el.attrs.radius * scaleX;
+    const self = this;
+    const scaleX = this.el.attrs.scaleX;
+    const scaledRadius = self.el.attrs.radius * scaleX;
+
     self.el.setAttrs({
       radius: scaledRadius,
       scaleX: 1,
@@ -1860,6 +1872,7 @@
 
   function AJTEEllipse(args, AJTEEditor) {
     AJTEElement.call(this, args, AJTEEditor);
+
     this.fill = args && args.fill ? args.fill : 'blue';
     this.stroke = args && args.stroke ? args.stroke : 'black';
     this.strokeWidth = args && args.strokeWidth ? args.strokeWidth : 4;
@@ -1867,11 +1880,15 @@
     this.radiusY = args && args.radiusY ? args.radiusY : 50;
     this.x = args && args.x ? args.x : 100;
     this.y = args && args.y ? args.y : 100;
+    this.rotation = args && args.rotation ? args.rotation : 0;
+    this.skewX = args && args.skewX ? args.skewX : 0;
+    this.skewY = args && args.skewY ? args.skewY : 0;
     this.type = 'ellipse';
     this.id = args && args.id ? args.id : 'ellipse-' + Date.now();
 
     this.init = function () {
-      var self = this;
+      const self = this;
+
       this.el = new Konva.Ellipse({
         id: self.id,
         x: self.x,
@@ -1881,6 +1898,9 @@
         fill: self.fill,
         stroke: self.stroke,
         strokeWidth: self.strokeWidth,
+        rotation: self.rotation,
+        skewX: self.skewX,
+        skewY: self.skewY,
         index: self.index,
         label: self.label,
         value: self.value,
@@ -1895,11 +1915,12 @@
   }
 
   AJTEEllipse.prototype.onTransform = function () {
-    var self = this;
-    var scaleX = this.el.attrs.scaleX;
-    var scaleY = this.el.attrs.scaleY;
-    var scaledRadiusX = self.el.attrs.radiusX * scaleX;
-    var scaledRadiusY = self.el.attrs.radiusY * scaleY;
+    const self = this;
+    const scaleX = this.el.attrs.scaleX;
+    const scaleY = this.el.attrs.scaleY;
+    const scaledRadiusX = self.el.attrs.radiusX * scaleX;
+    const scaledRadiusY = self.el.attrs.radiusY * scaleY;
+
     self.el.setAttrs({
       radiusX: scaledRadiusX,
       radiusY: scaledRadiusY,
@@ -1913,6 +1934,7 @@
 
   function AJTELine(args, AJTEEditor) {
     AJTEElement.call(this, args, AJTEEditor);
+
     this.stroke = args && args.stroke ? args.stroke : 'black';
     this.strokeWidth = args && args.strokeWidth ? args.strokeWidth : 4;
     this.radius = args && args.radius ? args.radius : 100;
@@ -1923,11 +1945,15 @@
     this.lineCap = args.line && args.line.lineCap ? args.line.lineCap : 'round';
     this.x = args && args.x ? args.x : 0;
     this.y = args && args.y ? args.y : this.strokeWidth;
+    this.rotation = args && args.rotation ? args.rotation : 0;
+    this.scaleX = args && args.scaleX ? args.scaleX : 0;
+    this.scaleY = args && args.scaleY ? args.scaleY : 0;
     this.type = 'line';
     this.id = args && args.id ? args.id : 'line-' + Date.now();
 
     this.init = function () {
-      var self = this;
+      const self = this;
+
       this.el = new Konva.Line({
         id: self.id,
         x: self.x,
@@ -1935,6 +1961,9 @@
         points: self.points,
         stroke: self.stroke,
         strokeWidth: self.strokeWidth,
+        rotation: self.rotation,
+        scaleX: self.scaleX,
+        scaleY: self.scaleY,
         index: self.index,
         label: self.label,
         value: self.value,
