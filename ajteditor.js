@@ -2462,7 +2462,7 @@
 
     const menuNode = document.getElementById('ajte-context-menu');
     const textMenuNode = document.getElementById('ajte-text-context-menu');
-    const currentElement = null;
+    let currentElement = null;
     const self = this;
 
     document.getElementById('delete-button').addEventListener('click', () => {
@@ -2508,6 +2508,7 @@
       if (self.isMarkingShape == true) {
         self.unmarkShapes();
       }
+
       // prevent default behavior
       e.evt.preventDefault();
       if (e.target === self.stage) {
@@ -2524,6 +2525,7 @@
         containerRect.top + self.stage.getPointerPosition().y + 4 + 'px';
       const left =
         containerRect.left + self.stage.getPointerPosition().x + 4 + 'px';
+
       if (shape.constructor.name == 'Text') {
         textMenuNode.style.display = 'initial';
         textMenuNode.style.top = top;
