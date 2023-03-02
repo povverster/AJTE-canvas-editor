@@ -2753,26 +2753,29 @@
   };
 
   AJTEEditor.prototype.storeToJSON = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:storeToJSON');
     }
 
-    var json = {
+    const json = {
       stage: {
         height: this.args.stage.height,
         width: this.args.stage.width
       },
       elements: {}
     };
-    for (var i in this.store.elements) {
-      json.elements[i] = this.store.elements[i].el;
+
+    for (let i in this.store.elements) {
+      if (this.store && this.store.elements && this.store.elements[i]) {
+        json.elements[i] = this.store.elements[i].el;
+      }
     }
 
     return JSON.stringify(json);
   };
 
   AJTEEditor.prototype.reset = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:reset');
     }
 
@@ -2791,13 +2794,14 @@
       },
       elements: {}
     };
+
     this.currentElId = false;
 
     this.layer.draw();
   };
 
   AJTEEditor.prototype.restore = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:restore');
     }
 
