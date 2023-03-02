@@ -1726,6 +1726,7 @@
 
   function AJTERect(args, AJTEEditor) {
     AJTEElement.call(this, args, AJTEEditor);
+
     this.fill = args && args.fill ? args.fill : 'blue';
     this.stroke = args && args.stroke ? args.stroke : 'black';
     this.strokeWidth =
@@ -1742,11 +1743,14 @@
       args && args.borderRadiusBottom ? args.borderRadiusBottom : 0;
     this.borderRadiusLeft =
       args && args.borderRadiusLeft ? args.borderRadiusLeft : 0;
+    this.rotation = args && args.rotation ? args.rotation : 0;
+    this.skew = args && args.skew ? args.skew : 0;
     this.type = 'rect';
     this.id = args && args.id ? args.id : 'rect-' + Date.now();
 
     this.init = function () {
       var self = this;
+
       this.el = new Konva.Rect({
         id: self.id,
         x: self.x,
@@ -1766,6 +1770,8 @@
         borderRadiusRight: self.borderRadiusRight,
         borderRadiusBottom: self.borderRadiusBottom,
         borderRadiusLeft: self.borderRadiusLeft,
+        rotation: self.rotation,
+        skew: self.skew,
         index: self.index,
         label: self.label,
         value: self.value,
@@ -1779,6 +1785,7 @@
       } else {
         self.initActiveElement();
       }
+
       self.initElement();
     };
 
