@@ -1349,7 +1349,7 @@
 
     this.init = function () {
       const textDecoration = this.isUnderline ? 'underline' : 'none';
-      const fontStyle = '';
+      let fontStyle = '';
       const fontStyleArr = [];
 
       if (this.isBold) {
