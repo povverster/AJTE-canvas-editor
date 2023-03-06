@@ -1023,13 +1023,17 @@
   };
 
   AJTEElement.prototype.focus = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEElement:focus');
     }
+
     if (this.transformer) {
-      var self = this;
+      const self = this;
+
       this.el.on('transform', function () {
-        if (self.onTransform) self.onTransform();
+        if (self.onTransform) {
+          self.onTransform();
+        }
       });
 
       this.layer.add(this.transformer);
@@ -1038,19 +1042,32 @@
   };
 
   AJTEElement.prototype.blur = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEElement:blur');
     }
-    if (this.transformer) {
-      this.transformer.remove();
+
+    // !!! This code doesn't work correctly !!!
+    // if (this.transformer) {
+    //   this.transformer.remove();
+    //   this.layer.draw();
+    // }
+
+    const transformer = this.layer
+      .find('Transformer')
+      .toArray()
+      .find((tr) => tr.nodes()[0] === this.el);
+
+    if (transformer) {
+      tf.destroy();
       this.layer.draw();
     }
   };
 
   AJTEElement.prototype.restartTransformer = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEElement:restartTransformer');
     }
+
     this.blur();
     this.focus();
   };
@@ -1064,7 +1081,7 @@
   };
 
   AJTEElement.prototype.setIndex = function (index) {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEElement:setIndex');
     }
 
@@ -1074,24 +1091,27 @@
   };
 
   AJTEElement.prototype.up = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEElement:up');
     }
+
     // var zIndex = this.el.zIndex();
     // zIndex++;
     // this.el.zIndex(zIndex);
     // this.el.setAttrs({
     //     index: zIndex
     // });
+
     this.el.moveUp();
     this.AJTEEditor.rearrangeIndexes();
     this.layer.batchDraw();
   };
 
   AJTEElement.prototype.down = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEElement:down');
     }
+
     // var zIndex = this.el.zIndex();
     // if(zIndex == 0) return;
     // zIndex--;
@@ -1099,16 +1119,18 @@
     //     index: zIndex
     // });
     // this.el.zIndex(zIndex);
+
     this.el.moveDown();
     this.AJTEEditor.rearrangeIndexes();
     this.layer.batchDraw();
   };
 
   AJTEElement.prototype.formatStyleValue = function (stylename, styleval) {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEElement:formatStyleValue');
     }
-    var intList = [
+
+    const intList = [
       'strokeWidth',
       'fontSize',
       'paddingTop',
@@ -1125,10 +1147,11 @@
   };
 
   AJTEElement.prototype.changeStyle = function (stylename, styleval) {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEElement:changeStyle');
     }
-    var resultval = '';
+
+    let resultval = '';
     this[stylename] = styleval;
 
     switch (stylename) {
@@ -1226,11 +1249,13 @@
     direction,
     styleval
   ) {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEElement:generateArrStyle');
     }
-    var oldStyle = this.el.getAttr(stylename);
-    if (oldStyle.length == 2) {
+
+    const oldStyle = this.el.getAttr(stylename);
+
+    if (oldStyle.length === 2) {
       oldStyle.push(oldStyle[1]);
       oldStyle.push(oldStyle[1]);
       oldStyle[1] = oldStyle[0];
@@ -1261,15 +1286,15 @@
   };
 
   AJTEElement.prototype.generateFontStyle = function (stylename, styleval) {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEElement:generateFontStyle');
     }
 
-    var oldStyle = this.el.getAttr('fontStyle');
-    var oldStyleArr = oldStyle.split(' ');
-    var oldNormilizefStyleArr = [];
-    var newStyleArr = [];
-    var newStyle = oldStyle;
+    const oldStyle = this.el.getAttr('fontStyle');
+    const oldStyleArr = oldStyle.split(' ');
+    const oldNormilizefStyleArr = [];
+    let newStyleArr = [];
+    let newStyle = oldStyle;
 
     /* remove normal */
     for (var i = 0; i < oldStyleArr.length; i++) {
@@ -1283,6 +1308,7 @@
       if (oldStyle.indexOf(stylename) == -1) {
         oldNormilizefStyleArr.push(stylename);
       }
+
       newStyleArr = oldNormilizefStyleArr;
     } else {
       for (var i = 0; i < oldNormilizefStyleArr.length; i++) {
@@ -1311,20 +1337,11 @@
     this.AJTEEditor.bar.resetToolbarContent();
 
     // ------------ destroy transformer --------------
-    // this.blur();
-    const tf = this.layer
-      .find('Transformer')
-      .toArray()
-      .find((tr) => tr.nodes()[0] === this.el);
-
-    if (tf) {
-      tf.destroy();
-    }
+    this.blur();
     // -----------------------------------------------
 
     this.el.destroy();
-    // this.layer.batchDraw();
-    this.layer.draw();
+    this.layer.batchDraw();
   };
 
   function AJTEText(args, AJTEEditor) {
