@@ -1046,19 +1046,8 @@
       console.info('AJTEElement:blur');
     }
 
-    // !!! This code doesn't work correctly !!!
-    // if (this.transformer) {
-    //   this.transformer.remove();
-    //   this.layer.draw();
-    // }
-
-    const transformer = this.layer
-      .find('Transformer')
-      .toArray()
-      .find((tr) => tr.nodes()[0] === this.el);
-
-    if (transformer) {
-      transformer.destroy();
+    if (this.transformer) {
+      this.transformer.remove();
       this.layer.draw();
     }
   };
@@ -1337,7 +1326,16 @@
     this.AJTEEditor.bar.resetToolbarContent();
 
     // ------------ destroy transformer --------------
-    this.blur();
+    // this.blur();
+
+    const transformer = this.layer
+      .find('Transformer')
+      .toArray()
+      .find((tr) => tr.nodes()[0] === this.el);
+
+    if (transformer) {
+      transformer.destroy();
+    }
     // -----------------------------------------------
 
     this.el.destroy();
