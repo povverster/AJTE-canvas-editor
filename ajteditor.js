@@ -1304,18 +1304,30 @@
   };
 
   AJTEElement.prototype.deleteElement = function () {
-    var input = document.getElementById('input_' + this.el.attrs.id);
+    const input = document.getElementById('input_' + this.el.attrs.id);
     input.parentElement.remove();
 
     this.AJTEEditor.store.elements[this.el.attrs.id] = null;
     this.AJTEEditor.bar.resetToolbarContent();
-    this.blur();
+
+    // ------------ destroy transformer --------------
+    // this.blur();
+    const tf = this.layer
+      .find('Transformer')
+      .toArray()
+      .find((tr) => tr.nodes()[0] === this.el);
+
+    if (tf) {
+      tf.destroy();
+    }
+    // -----------------------------------------------
+
     this.el.destroy();
     this.layer.batchDraw();
   };
 
   function AJTEText(args, AJTEEditor) {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEText:constructor');
     }
 
