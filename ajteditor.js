@@ -1323,7 +1323,8 @@
     // -----------------------------------------------
 
     this.el.destroy();
-    this.layer.batchDraw();
+    // this.layer.batchDraw();
+    this.layer.draw();
   };
 
   function AJTEText(args, AJTEEditor) {
@@ -3125,9 +3126,10 @@
   };
 
   AJTEEditor.prototype.addToHistory = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:addToHistory');
     }
+
     if (this.history.length > this.historyMaxStep) {
       this.history.shift();
       this.historyIterator--;
@@ -3149,21 +3151,23 @@
   };
 
   AJTEEditor.prototype.blurAllElements = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:blurAllElements');
     }
 
-    for (var i in this.store.elements) {
-      this.store.elements[i].blur();
+    for (let i in this.store.elements) {
+      if (this.store && this.store.elements && this.store.elements[i]) {
+        this.store.elements[i].blur();
+      }
     }
   };
 
   AJTEEditor.prototype.addBody = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:addBody');
     }
 
-    var htmldata =
+    let htmldata =
       '<section id="ajteditor"> \
             <div id="ajtebar" class="ajtebar"> \
             </div> \
@@ -3210,14 +3214,14 @@
   };
 
   AJTEEditor.prototype.addAsideBody = function () {
-    if (ajteMode == 'dev') {
+    if (ajteMode === 'dev') {
       console.info('AJTEEditor:addAsideBody');
     }
 
-    var self = this;
-    var asideTitle = document.getElementById('ajteasidetitle');
+    const self = this;
+    const asideTitle = document.getElementById('ajteasidetitle');
 
-    var tit = document.createElement('div');
+    const tit = document.createElement('div');
     tit.className = 'ajte-input-wrap';
     tit.innerHTML =
       '<label>Title:</label> \
