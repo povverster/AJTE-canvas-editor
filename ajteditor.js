@@ -1058,7 +1058,7 @@
       .find((tr) => tr.nodes()[0] === this.el);
 
     if (transformer) {
-      tf.destroy();
+      transformer.destroy();
       this.layer.draw();
     }
   };
