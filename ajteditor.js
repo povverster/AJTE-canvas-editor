@@ -1320,7 +1320,10 @@
 
   AJTEElement.prototype.deleteElement = function () {
     const input = document.getElementById('input_' + this.el.attrs.id);
-    input.parentElement.remove();
+
+    if (input && input.parentElement) {
+      input.parentElement.remove();
+    }
 
     this.AJTEEditor.store.elements[this.el.attrs.id] = null;
     this.AJTEEditor.bar.resetToolbarContent();
@@ -1431,6 +1434,7 @@
       } else {
         self.initActiveElement();
       }
+
       self.initElement();
 
       self.el.on('dragmove', function () {
@@ -1688,6 +1692,7 @@
         } else {
           self.initActiveElement();
         }
+
         self.initElement();
 
         self.el.on('dragmove', function () {
@@ -1911,6 +1916,12 @@
 
       self.layer.add(self.el);
 
+      if (self.AJTEEditor instanceof AJTEUserEditor) {
+        self.initInactiveElement();
+      } else {
+        self.initActiveElement();
+      }
+
       self.initElement();
     };
 
@@ -1970,6 +1981,13 @@
       });
 
       self.layer.add(self.el);
+
+      if (self.AJTEEditor instanceof AJTEUserEditor) {
+        self.initInactiveElement();
+      } else {
+        self.initActiveElement();
+      }
+
       self.initElement();
     };
 
@@ -2033,6 +2051,13 @@
       });
 
       self.layer.add(self.el);
+
+      if (self.AJTEEditor instanceof AJTEUserEditor) {
+        self.initInactiveElement();
+      } else {
+        self.initActiveElement();
+      }
+
       self.initElement();
     };
 
