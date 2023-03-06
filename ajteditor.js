@@ -2019,7 +2019,7 @@
     this.strokeWidth = args && args.strokeWidth ? args.strokeWidth : 4;
     this.radius = args && args.radius ? args.radius : 100;
     this.points =
-      args.line && args.line.points ? args.line.points : [0, 0, 100, 0];
+      args.line && args.line.points ? args.line.points : [20, 20, 120, 20];
     this.lineJoin =
       args.line && args.line.lineJoin ? args.line.lineJoin : 'round';
     this.lineCap = args.line && args.line.lineCap ? args.line.lineCap : 'round';
@@ -2162,7 +2162,7 @@
       },
       line: {
         points:
-          args.line && args.line.points ? args.line.points : [0, 0, 100, 0],
+          args.line && args.line.points ? args.line.points : [20, 20, 120, 20],
         lineCap: args.line && args.line.lineCap ? args.line.lineCap : 'round',
         lineJoin: args.line && args.line.lineJoin ? args.line.lineJoin : 'round'
       }
