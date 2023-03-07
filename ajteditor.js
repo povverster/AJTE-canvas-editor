@@ -1323,9 +1323,34 @@
       return;
     }
 
-    this.removeElInput(this.el.attrs.id);
-    this.removeElLabel(this.el.attrs.id);
     this.removeElTransformer(this.el, this.layer);
+
+    // ------------------- remove input ----------------------
+    const input = document.getElementById(`input_${id}`);
+
+    if (input && input.parentElement) {
+      input.parentElement.remove();
+    }
+    // -------------------------------------------------------
+
+    // ------------------- remove label ----------------------
+    const label = document.getElementById(`label_${id}`);
+
+    if (label) {
+      label.remove();
+    }
+    // -------------------------------------------------------
+
+    // ---------------- remove transformer -------------------
+    const transformer = layer
+      .find('Transformer')
+      .toArray()
+      .find((tr) => tr.nodes()[0] === el);
+
+    if (transformer) {
+      transformer.destroy();
+    }
+    // -------------------------------------------------------
 
     this.AJTEEditor.store.elements[this.el.attrs.id] = null;
     this.AJTEEditor.bar.resetToolbarContent();
@@ -2992,53 +3017,11 @@
     xhr.send(formData);
   };
 
-  AJTEEditor.prototype.removeElInput = function (id) {
-    if (!id) {
-      console.log('[removeElInput] - wrong args');
-      return;
-    }
-
-    const input = document.getElementById(`input_${id}`);
-
-    if (input && input.parentElement) {
-      input.parentElement.remove();
-    }
-  };
-
-  AJTEEditor.prototype.removeElTransformer = function (el, layer) {
-    if (!el || !layer) {
-      console.log('[removeElTransformer] - wrong args');
-      return;
-    }
-
-    const transformer = layer
-      .find('Transformer')
-      .toArray()
-      .find((tr) => tr.nodes()[0] === el);
-
-    if (transformer) {
-      transformer.destroy();
-    }
-  };
-
   AJTEEditor.prototype.hideLabels = function () {
     const elements = document.querySelectorAll('.ajte-image-change');
 
     for (let i = 0; i < elements.length; i++) {
       elements[i].style.visibility = 'hidden';
-    }
-  };
-
-  AJTEEditor.prototype.removeElLabel = function (id) {
-    if (!id) {
-      console.log('[removeElLabel] - wrong args');
-      return;
-    }
-
-    const label = document.getElementById(`label_${id}`);
-
-    if (label) {
-      label.remove();
     }
   };
 
