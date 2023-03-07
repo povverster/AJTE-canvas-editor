@@ -1323,8 +1323,10 @@
       return;
     }
 
+    const elId = this.el.attrs.id;
+
     // ------------------- remove input ----------------------
-    const input = document.getElementById(`input_${id}`);
+    const input = document.getElementById(`input_${elId}`);
 
     if (input && input.parentElement) {
       input.parentElement.remove();
@@ -1332,7 +1334,7 @@
     // -------------------------------------------------------
 
     // ------------------- remove label ----------------------
-    const label = document.getElementById(`label_${id}`);
+    const label = document.getElementById(`label_${elId}`);
 
     if (label) {
       label.remove();
@@ -1340,17 +1342,17 @@
     // -------------------------------------------------------
 
     // ---------------- remove transformer -------------------
-    const transformer = layer
+    const transformer = this.layer
       .find('Transformer')
       .toArray()
-      .find((tr) => tr.nodes()[0] === el);
+      .find((tr) => tr.nodes()[0] === this.el);
 
     if (transformer) {
       transformer.destroy();
     }
     // -------------------------------------------------------
 
-    this.AJTEEditor.store.elements[this.el.attrs.id] = null;
+    this.AJTEEditor.store.elements[elId] = null;
     this.AJTEEditor.bar.resetToolbarContent();
 
     this.el.destroy();
