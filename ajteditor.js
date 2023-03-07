@@ -1319,27 +1319,16 @@
   };
 
   AJTEElement.prototype.deleteElement = function () {
-    const input = document.getElementById('input_' + this.el.attrs.id);
-
-    if (input && input.parentElement) {
-      input.parentElement.remove();
+    if (!this.el || !this.el.attrs || !this.el.attrs.id) {
+      return;
     }
+
+    this.removeElInput(this.el.attrs.id);
+    this.removeElLabel(this.el.attrs.id);
+    this.removeElTransformer(this.el, this.layer);
 
     this.AJTEEditor.store.elements[this.el.attrs.id] = null;
     this.AJTEEditor.bar.resetToolbarContent();
-
-    // ------------ destroy transformer --------------
-    // this.blur();
-
-    const transformer = this.layer
-      .find('Transformer')
-      .toArray()
-      .find((tr) => tr.nodes()[0] === this.el);
-
-    if (transformer) {
-      transformer.destroy();
-    }
-    // -----------------------------------------------
 
     this.el.destroy();
     this.layer.batchDraw();
@@ -2938,8 +2927,8 @@
   };
 
   AJTEEditor.prototype.sendToServer = function (storejson, status, type, cb) {
-    var self = this;
-    var xhr = new XMLHttpRequest();
+    const self = this;
+    const xhr = new XMLHttpRequest();
 
     // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     // xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -2999,33 +2988,80 @@
         }
       });
     }
+
     xhr.send(formData);
   };
 
+  AJTEEditor.prototype.removeElInput = function (id) {
+    if (!id) {
+      console.log('[removeElInput] - wrong args');
+      return;
+    }
+
+    const input = document.getElementById(`input_${id}`);
+
+    if (input && input.parentElement) {
+      input.parentElement.remove();
+    }
+  };
+
+  AJTEEditor.prototype.removeElTransformer = function (el, layer) {
+    if (!el || !layer) {
+      console.log('[removeElTransformer] - wrong args');
+      return;
+    }
+
+    const transformer = layer
+      .find('Transformer')
+      .toArray()
+      .find((tr) => tr.nodes()[0] === el);
+
+    if (transformer) {
+      transformer.destroy();
+    }
+  };
+
   AJTEEditor.prototype.hideLabels = function () {
-    var elements = document.querySelectorAll('.ajte-image-change');
-    for (var i = 0; i < elements.length; i++) {
+    const elements = document.querySelectorAll('.ajte-image-change');
+
+    for (let i = 0; i < elements.length; i++) {
       elements[i].style.visibility = 'hidden';
     }
   };
 
+  AJTEEditor.prototype.removeElLabel = function (id) {
+    if (!id) {
+      console.log('[removeElLabel] - wrong args');
+      return;
+    }
+
+    const label = document.getElementById(`label_${id}`);
+
+    if (label) {
+      label.remove();
+    }
+  };
+
   AJTEEditor.prototype.removeLabels = function () {
-    var elements = document.querySelectorAll('.ajte-image-change');
-    for (var i = 0; i < elements.length; i++) {
+    const elements = document.querySelectorAll('.ajte-image-change');
+
+    for (let i = 0; i < elements.length; i++) {
       elements[i].remove();
     }
   };
 
   AJTEEditor.prototype.showLabels = function () {
-    var elements = document.querySelectorAll('.ajte-image-change');
-    for (var i = 0; i < elements.length; i++) {
+    const elements = document.querySelectorAll('.ajte-image-change');
+
+    for (let i = 0; i < elements.length; i++) {
       elements[i].style.visibility = 'visible';
     }
   };
 
   AJTEEditor.prototype.__progressHandler = function (event, self, type) {
     if (document.getElementById('AJTEprogressBar') && type == 'visible') {
-      var percent = (event.loaded / event.total) * 100;
+      const percent = (event.loaded / event.total) * 100;
+
       document.getElementById('AJTEprogressBar').value = Math.round(percent);
       document.getElementById('AJTEstatus').innerHTML =
         Math.round(percent) + '%';
@@ -3033,7 +3069,7 @@
   };
 
   AJTEEditor.prototype.__completeHandler = function (event, self, type, cb) {
-    var response = event.target;
+    const response = event.target;
 
     if (response.status != 200) {
       this.showError(this.translation.save_failed, type);
