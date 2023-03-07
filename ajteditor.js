@@ -1323,8 +1323,6 @@
       return;
     }
 
-    this.removeElTransformer(this.el, this.layer);
-
     // ------------------- remove input ----------------------
     const input = document.getElementById(`input_${id}`);
 
