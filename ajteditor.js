@@ -2092,6 +2092,7 @@
         height: args.stage && args.stage.height ? args.stage.height : 500
       },
       image: {
+        isNew: false,
         src:
           args.image && args.image.src
             ? args.image.src
@@ -2295,7 +2296,7 @@
   };
 
   AJTEEditor.prototype.addEventListeners = function () {
-    var self = this;
+    const self = this;
 
     this.stage.on('dragend', function (e) {
       if (!(e.target instanceof Konva.Transformer)) {
@@ -2303,13 +2304,39 @@
       }
     });
 
+    // temporarily solution ---------------------
+    let ajteImageTimerCounter = 0;
+    let ajteImageTimer = setTimeout(function ajteImageTimerTick() {
+      if (ajteImageTimerCounter > 80) {
+        return;
+      }
+
+      const ajteImage = document.getElementById('ajteImage');
+
+      if (ajteImage) {
+        ajteImage.addEventListener('click', () => {
+          if (self.args['image']) {
+            self.args['image'].isNew = true;
+          }
+        });
+
+        return;
+      }
+
+      ajteImageTimerCounter++;
+      ajteImageTimer = setTimeout(ajteImageTimerTick, 400);
+    }, 10);
+    // ------------------------------------------
+
     document.addEventListener('libraryActiveFileChanged', function (event) {
       if (
+        !self.args['image'].isNew &&
         self.store.elements[self.currentElId] &&
         self.store.elements[self.currentElId] instanceof AJTEImage
       ) {
         self.store.elements[self.currentElId].changeSrc(event.detail.src);
       } else {
+        self.args['image'].isNew = false;
         self.args['image'].src = event.detail.src;
         self.createElement(self.args['image'], 'image');
       }
@@ -2317,7 +2344,7 @@
       return false;
     });
 
-    var eventsKeysStack = [0, 0];
+    const eventsKeysStack = [0, 0];
     document.addEventListener('keydown', function (event) {
       eventsKeysStack.shift();
       eventsKeysStack.push(event.key);
