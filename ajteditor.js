@@ -1591,6 +1591,21 @@
       }
     }
 
+    function hidePrevText() {
+      if (
+        textarea.previousSibling &&
+        textarea.previousSibling.tagName &&
+        textarea.previousSibling.tagName.toLowerCase() === 'textarea'
+      ) {
+        textarea.previousSibling.style.display = 'none';
+      }
+    }
+
+    hidePrevText();
+    textarea.addEventListener('keyup', () => {
+      hidePrevText();
+    });
+
     setTimeout(() => {
       window.addEventListener('click', handleOutsideClick);
     });
