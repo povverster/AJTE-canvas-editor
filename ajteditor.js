@@ -1462,6 +1462,10 @@
   AJTEText.prototype = Object.create(AJTEElement.prototype);
 
   AJTEText.prototype.editText = function () {
+    if (ajteMode == 'dev') {
+      console.info('AJTEText:editText');
+    }
+
     const stageBox = this.stage.container().getBoundingClientRect();
 
     const self = this;
@@ -1534,6 +1538,10 @@
     }
 
     function updateValue() {
+      if (ajteMode == 'dev') {
+        console.info('AJTEText:editText:updateValue');
+      }
+
       self.el.text(textarea.value);
       self.value = textarea.value;
       self.el.attrs.value = textarea.value;
@@ -1542,6 +1550,10 @@
     }
 
     function setTextareaWidth(newWidth) {
+      if (ajteMode == 'dev') {
+        console.info('AJTEText:editText:setTextareaWidth');
+      }
+
       if (!newWidth) {
         // set width for placeholder
         newWidth = self.el.placeholder.length * self.el.fontSize();
@@ -1586,6 +1598,10 @@
 
     function handleOutsideClick(e) {
       if (e.target !== textarea) {
+        if (ajteMode == 'dev') {
+          console.info('AJTEText:editText:handleOutsideClick');
+        }
+
         updateValue();
         removeTextarea();
       }
@@ -1597,6 +1613,10 @@
         textarea.previousSibling.tagName &&
         textarea.previousSibling.tagName.toLowerCase() === 'textarea'
       ) {
+        if (ajteMode == 'dev') {
+          console.info('AJTEText:editText:hidePrevText');
+        }
+
         textarea.previousSibling.style.display = 'none';
       }
     }
@@ -1604,6 +1624,10 @@
     hidePrevText();
     textarea.addEventListener('keyup', () => {
       hidePrevText();
+    });
+
+    textarea.addEventListener('click', (e) => {
+      e.stopPropagation();
     });
 
     setTimeout(() => {
