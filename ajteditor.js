@@ -14,7 +14,11 @@
     factory(global);
   }
 })(typeof window !== 'undefined' ? window : this, (window) => {
-  var ajteMode = 'prod';
+  const ajteMode = 'prod';
+
+  // !!! TEMPORARY SOLUTION !!!
+  const transformers = [];
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!
 
   function AJTESwitcher(el, input, cb) {
     this.el = el;
@@ -946,8 +950,12 @@
 
     if (this instanceof AJTEImage) {
       self.transformer = new Konva.Transformer({
-        node: self.el
+        node: self.el,
+        anchorSize: 10,
+        borderEnabled: true
       });
+
+      transformers.push(self.transformer);
 
       self.el.setAttrs({
         draggable: true
@@ -980,6 +988,8 @@
       self.transformer = new Konva.Transformer({
         node: self.el,
         enabledAnchors: ['middle-left', 'middle-right'],
+        anchorSize: 10,
+        borderEnabled: true,
         // set minimum width of text
         boundBoxFunc: function (oldBox, newBox) {
           newBox.width = Math.max(30, newBox.width);
@@ -992,9 +1002,13 @@
       });
     } else {
       self.transformer = new Konva.Transformer({
-        node: self.el
+        node: self.el,
+        anchorSize: 10,
+        borderEnabled: true
       });
     }
+
+    transformers.push(self.transformer);
 
     self.el.setAttrs({
       draggable: true
@@ -2994,25 +3008,36 @@
   AJTEEditor.prototype.createDataUrl = function () {
     this.stage.width(parseInt(this.args.stage.width));
     this.stage.height(parseInt(this.args.stage.height));
+
     this.blurAllElements();
     this.hideLabels();
+
+    if (transformers && transformers.length) {
+      for (let i = 0; i < transformers.length; i++) {
+        if (transformers[i] instanceof Konva.Transformer) {
+          transformers[i].anchorSize(0);
+          transformers[i].borderEnabled(false);
+          transformers[i].forceUpdate();
+        }
+      }
+    }
 
     this.stage.draw();
     this.layer.draw();
 
     var dataURL = this.stage.toDataURL({ pixelRatio: 1 });
 
-    // !!!!!!!!!!!!!!!!!!!! TEMPORARILY DISABLED !!!!!!!!!!!!!!!!!!!!!!!
-    // It can be a source of issue when canvas size becomes extra large.
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-    // this.fitStageIntoParentContainer();
-
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
     this.showLabels();
+
+    if (transformers && transformers.length) {
+      for (let i = 0; i < transformers.length; i++) {
+        if (transformers[i] instanceof Konva.Transformer) {
+          transformers[i].anchorSize(10);
+          transformers[i].borderEnabled(true);
+          transformers[i].forceUpdate();
+        }
+      }
+    }
 
     return dataURL;
   };
