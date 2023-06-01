@@ -8,7 +8,7 @@
   font: 16px/1.6 "Lato", sans-serif;
   display: flex;
   flex-direction: column;
-  min-width: 1315px;
+  min-width: 1280px;
   overflow-x: auto;
 }
 
@@ -29,6 +29,19 @@
 
 #ajteditor input[type="number"] {
   padding: 10px 3px 10px 10px;
+}
+
+#ajteditor {
+  .ajte-stage-size {
+    span {
+      font-size: 0.9rem;
+    }
+
+    input[type="number"] {
+      padding: 3px;
+      font-size: 0.85rem;
+    }
+  }
 }
 
 #ajteaside input[type="text"],
