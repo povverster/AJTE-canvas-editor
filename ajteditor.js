@@ -158,7 +158,7 @@
 
     this.buttons = args.buttons
       ? args.buttons
-      : ['text', 'editableText', 'image', 'shape'];
+      : ['text', 'editableText', 'image', 'editableImage', 'shape'];
 
     this.settings = {
       AJTEEditor: args.AJTEEditor,
@@ -255,6 +255,9 @@
         case 'editableText':
           args = this.args['text'];
           break;
+        case 'editableImage':
+          args = this.args['image'];
+          break;
         default:
           args = this.args[type];
       }
@@ -270,13 +273,19 @@
         break;
       case 'editableText':
         bar_info = {
-          menu: '<li><a href="#" id="ajteEditableText" data-type="editableText"><i class="fa fa-edit"></i><span>Editable text</span></a></li>',
+          menu: '<li><a href="#" id="ajteEditableText" data-type="editableText"><i class="fa fa-i-cursor"></i><span>Editable Text</span></a></li>',
           content: this.getTextContent(args)
         };
         break;
       case 'image':
         bar_info = {
           menu: '<li><a href="#" id="ajteImage"><i class="fa fa-file-image"></i><span>Image</span></a></li>',
+          content: ''
+        };
+        break;
+      case 'editableImage':
+        bar_info = {
+          menu: '<li><a href="#" id="ajteEditableImage"><i class="fa fa-edit"></i><span>Editable Image</span></a></li>',
           content: ''
         };
         break;
@@ -3015,9 +3024,13 @@
     if (transformers && transformers.length) {
       for (let i = 0; i < transformers.length; i++) {
         if (transformers[i] instanceof Konva.Transformer) {
-          transformers[i].anchorSize(0);
-          transformers[i].borderEnabled(false);
-          transformers[i].forceUpdate();
+          const nodes = transformers[i].nodes();
+
+          if (nodes.length) {
+            transformers[i].anchorSize(0);
+            transformers[i].borderEnabled(false);
+            transformers[i].forceUpdate();
+          }
         }
       }
     }
@@ -3032,9 +3045,13 @@
     if (transformers && transformers.length) {
       for (let i = 0; i < transformers.length; i++) {
         if (transformers[i] instanceof Konva.Transformer) {
-          transformers[i].anchorSize(10);
-          transformers[i].borderEnabled(true);
-          transformers[i].forceUpdate();
+          const nodes = transformers[i].nodes();
+
+          if (nodes.length) {
+            transformers[i].anchorSize(10);
+            transformers[i].borderEnabled(true);
+            transformers[i].forceUpdate();
+          }
         }
       }
     }

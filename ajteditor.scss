@@ -135,8 +135,12 @@ a:hover {
 
 .ajte-list li a {
   display: block;
-  padding: 10px 20px;
+  padding: 7px 10px;
   text-decoration: none;
+
+  span, i {
+    font-size: 0.9rem;
+  }
 }
 
 .ajte-list li a:hover,
