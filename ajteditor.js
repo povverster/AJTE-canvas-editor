@@ -279,13 +279,13 @@
         break;
       case 'image':
         bar_info = {
-          menu: '<li><a href="#" id="ajteImage"><i class="fa fa-file-image"></i><span>Image</span></a></li>',
+          menu: '<li><a href="#" id="ajteImage" data-type="image"><i class="fa fa-file-image"></i><span>Image</span></a></li>',
           content: ''
         };
         break;
       case 'editableImage':
         bar_info = {
-          menu: '<li><a href="#" id="ajteEditableImage"><i class="fa fa-edit"></i><span>Editable Image</span></a></li>',
+          menu: '<li><a href="#" id="ajteEditableImage" data-type="editableImage"><i class="fa fa-edit"></i><span>Editable Image</span></a></li>',
           content: ''
         };
         break;
@@ -652,9 +652,16 @@
       });
     }
 
-    var ajteImage = document.getElementById('ajteImage');
+    const ajteImage = document.getElementById('ajteImage');
     if (ajteImage) {
       ajteImage.addEventListener('click', function () {
+        self.cb.image_cb();
+      });
+    }
+
+    const ajteEditableImage = document.getElementById('ajteEditableImage');
+    if (ajteEditableImage) {
+      ajteEditableImage.addEventListener('click', function () {
         self.cb.image_cb();
       });
     }
@@ -683,7 +690,7 @@
       console.info('AJTEBar:menuCreateElement');
     }
 
-    var type = el.dataset.type;
+    const type = el.dataset.type;
 
     self.setToolbarContent(self, type);
 
@@ -1734,7 +1741,7 @@
     this.skewX = args && args.skewX ? args.skewX : 0;
     this.skewY = args && args.skewY ? args.skewY : 0;
     this.id = args && args.id ? args.id : 'image-' + Date.now();
-    this.type = 'image';
+    this.type = this.type ? this.type : 'image';
 
     this.init = function () {
       const imageObj = new Image();
@@ -1857,7 +1864,6 @@
       self.el.attrs.src = src;
       self.el.attrs.width = position.width;
       self.el.attrs.height = imageObj2.naturalHeight / koef;
-      console.log('test1');
       self.AJTEEditor.addToHistory();
       self.setLabelPosition();
       self.transformer.forceUpdate();
@@ -1866,6 +1872,13 @@
 
     imageObj2.src = src;
   };
+
+  function AJTEEditableImage(args, AJTEEditor) {
+    this.type = 'editableImage';
+    AJTEImage.call(this, args, AJTEEditor);
+  }
+
+  AJTEEditableImage.prototype = Object.create(AJTEImage.prototype);
 
   function AJTEShape() {}
 
@@ -2160,6 +2173,13 @@
             ? args.image.src
             : 'no_image_available.png'
       },
+      editableImage: {
+        isNew: false,
+        src:
+          args.image && args.image.src
+            ? args.image.src
+            : 'no_image_available.png'
+      },
       text: {
         fill: args.font && args.font.fill ? args.font.fill : '#42445A',
         fontSize: args.font && args.font.fontSize ? args.font.fontSize : 14,
@@ -2388,6 +2408,28 @@
       ajteImageTimerCounter++;
       ajteImageTimer = setTimeout(ajteImageTimerTick, 400);
     }, 10);
+
+    let ajteEditableImageTimerCounter = 0;
+    let ajteEditableImageTimer = setTimeout(function ajteEditableImageTimerTick() {
+      if (ajteEditableImageTimerCounter > 80) {
+        return;
+      }
+
+      const ajteEditableImage = document.getElementById('ajteEditableImage');
+
+      if (ajteEditableImage) {
+        ajteEditableImage.addEventListener('click', () => {
+          if (self.args['image']) {
+            self.args['image'].isNew = true;
+          }
+        });
+
+        return;
+      }
+
+      ajteEditableImageTimerCounter++;
+      ajteEditableImageTimer = setTimeout(ajteEditableImageTimerTick, 400);
+    }, 10);
     // ------------------------------------------
 
     document.addEventListener('libraryActiveFileChanged', function (event) {
@@ -2400,7 +2442,9 @@
       } else {
         self.args['image'].isNew = false;
         self.args['image'].src = event.detail.src;
+        console.log('>>>', self);
         self.createElement(self.args['image'], 'image');
+        // self.createElement(self.args['editableImage'], 'editableImage');
       }
 
       return false;
@@ -2823,6 +2867,9 @@
       case 'image':
         new AJTEImage(args, self);
         break;
+      case 'editableImage':
+        new AJTEEditableImage(args, self);
+        break;
       case 'rect':
         new AJTERect(args, self);
         break;
@@ -3230,6 +3277,7 @@
       'text',
       'editableText',
       'image',
+      'editableImage',
       'rect',
       'ellipse',
       'line'
