@@ -20,6 +20,8 @@
   const transformers = [];
   // !!!!!!!!!!!!!!!!!!!!!!!!!!
 
+  let isEditableImage = false;
+
   function AJTESwitcher(el, input, cb) {
     this.el = el;
     this.input = input;
@@ -256,7 +258,7 @@
           args = this.args['text'];
           break;
         case 'editableImage':
-          args = this.args['image'];
+          args = this.args['editableImage'];
           break;
         default:
           args = this.args[type];
@@ -655,6 +657,7 @@
     const ajteImage = document.getElementById('ajteImage');
     if (ajteImage) {
       ajteImage.addEventListener('click', function () {
+        isEditableImage = false;
         self.cb.image_cb();
       });
     }
@@ -662,6 +665,7 @@
     const ajteEditableImage = document.getElementById('ajteEditableImage');
     if (ajteEditableImage) {
       ajteEditableImage.addEventListener('click', function () {
+        isEditableImage = true;
         self.cb.image_cb();
       });
     }
@@ -2419,8 +2423,8 @@
 
       if (ajteEditableImage) {
         ajteEditableImage.addEventListener('click', () => {
-          if (self.args['image']) {
-            self.args['image'].isNew = true;
+          if (self.args['editableImage']) {
+            self.args['editableImage'].isNew = true;
           }
         });
 
@@ -2440,11 +2444,15 @@
       ) {
         self.store.elements[self.currentElId].changeSrc(event.detail.src);
       } else {
-        self.args['image'].isNew = false;
-        self.args['image'].src = event.detail.src;
-        console.log('>>>', self);
-        self.createElement(self.args['image'], 'image');
-        // self.createElement(self.args['editableImage'], 'editableImage');
+        if (isEditableImage) {
+          self.args['editableImage'].isNew = false;
+          self.args['editableImage'].src = event.detail.src;
+          self.createElement(self.args['editableImage'], 'editableImage');
+        } else {
+          self.args['image'].isNew = false;
+          self.args['image'].src = event.detail.src;
+          self.createElement(self.args['image'], 'image');
+        }
       }
 
       return false;
