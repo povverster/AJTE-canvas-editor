@@ -1760,7 +1760,7 @@
       // imageObj.crossOrigin = 'Anonymous';
       const self = this;
 
-      self.AJTEEditor.disable();
+      // self.AJTEEditor.disable();
       imageObj.src = this.src;
       imageObj.onload = function () {
         self.el = new Konva.Image({
