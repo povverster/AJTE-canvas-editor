@@ -20,6 +20,7 @@
   const transformers = [];
   // !!!!!!!!!!!!!!!!!!!!!!!!!!
 
+  let ajteEditorArgs = {};
   let isEditableImage = false;
 
   function AJTESwitcher(el, input, cb) {
@@ -939,7 +940,8 @@
     if (ajteMode == 'dev') {
       console.info('AJTEElement:initElement');
     }
-    var self = this;
+
+    const self = this;
 
     if (self.AJTEEditor instanceof AJTEUserEditor) {
       self.initInactiveElement();
@@ -952,7 +954,12 @@
       this.el.index = this.el.attrs.index;
     }
 
-    this.createLabel();
+    if (
+      ajteEditorArgs.context === 'template' ||
+      self.type === 'editableImage'
+    ) {
+      this.createLabel();
+    }
 
     self.AJTEEditor.enable();
     self.AJTEEditor.activateElement(self, self.type);
@@ -966,9 +973,10 @@
     if (ajteMode == 'dev') {
       console.info('AJTEElement:initInactiveElement');
     }
-    var self = this;
 
-    if (this instanceof AJTEImage) {
+    const self = this;
+
+    if (this instanceof AJTEImage && self.type === 'editableImage') {
       self.transformer = new Konva.Transformer({
         node: self.el,
         anchorSize: 10,
@@ -1794,8 +1802,12 @@
   AJTEImage.prototype = Object.create(AJTEElement.prototype);
 
   AJTEImage.prototype.createLabel = function () {
-    var self = this;
-    var el = document.createElement('div');
+    if (ajteMode == 'dev') {
+      console.info('AJTEImage:createLabel');
+    }
+
+    const self = this;
+    const el = document.createElement('div');
     el.className = 'ajte-image-change';
     el.id = 'label_' + this.el.attrs.id;
     document.getElementById('ajtemainbar').appendChild(el);
@@ -2164,6 +2176,8 @@
     if (ajteMode == 'dev') {
       console.info('AJTEEditor:constructor');
     }
+
+    ajteEditorArgs = args;
 
     this.args = {
       stage: {
