@@ -907,7 +907,8 @@
             <div class="ajtefirstbtnline">    \
                 <a href="#" class="ajte-btn" data-action="save"><span>SAVE AS DRAFT</span></a>  \
                 <a href="#" class="ajte-btn ajte-btn-green" data-action="send"><span>SEND</span></a>  \
-                <a href="#" class="ajte-btn ajte-btn-dark" data-action="download"><i class="fa fa-download"></i><span>DOWNLOAD</span></a> \
+                <a href="#" class="ajte-btn ajte-btn-dark" data-action="download"><i class="fa fa-download"></i><span>DOWNLOAD AS PNG</span></a> \
+                <a href="#" class="ajte-btn ajte-btn-dark ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>DOWNLOAD AS PDF</span></a> \
             </div> \
         </div>';
     asideButtons.appendChild(btns);
@@ -3279,6 +3280,7 @@
     if (ajteMode == 'dev') {
       console.info('AJTEEditor:download');
     }
+
     var dataURL = this.createDataUrl();
 
     var link = document.createElement('a');
@@ -3505,7 +3507,8 @@
                 <a href="#" class="ajte-btn" data-action="save"><span>SAVE AS DRAFT</span></a>  \
                 <a href="#" class="ajte-btn ajte-btn-green" data-action="send"><span>SAVE</span></a>  \
             </li> \
-            <li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn-dark" data-action="download"><i class="fa fa-download"></i><span>DOWNLOAD</span></a></li> \
+            <li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn-dark" data-action="download"><i class="fa fa-download"></i><span>DOWNLOAD AS PNG</span></a></li> \
+            <li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn-dark ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>DOWNLOAD AS PDF</span></a></li> \
         </ul>';
     asideButtons.appendChild(btns);
   };
