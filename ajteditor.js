@@ -3585,7 +3585,7 @@
         }
       }
 
-      content += '>' + field.value + '</textarea>';
+      content += ' rows="1">' + field.value + '</textarea>';
       if (field.comment) {
         content += field.comment;
       }
@@ -3616,7 +3616,7 @@
       id +
       '" name="' +
       id +
-      '" class="ajte-input">' +
+      '" class="ajte-input" rows="1">' +
       this.store.elements[id].value +
       '</textarea>';
 
