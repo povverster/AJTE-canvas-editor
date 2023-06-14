@@ -1784,7 +1784,14 @@
         self.layer.add(self.el);
 
         if (self.AJTEEditor instanceof AJTEUserEditor) {
-          self.initInactiveElement();
+          if (
+            ajteEditorArgs.context === 'artwork' &&
+            self.type === 'editableImage'
+          ) {
+            self.initActiveElement();
+          } else {
+            self.initInactiveElement();
+          }
         } else {
           self.initActiveElement();
         }
@@ -2380,7 +2387,9 @@
 
       this.addEventListeners();
 
-      if (args.code) this.initDraw(args.code);
+      if (args.code) {
+        this.initDraw(args.code);
+      }
 
       this.addAsideCustomFields();
 
@@ -3543,11 +3552,13 @@
 
   function AJTEUserEditor(args) {
     AJTEEditor.call(this, args);
-    var self = this;
+
+    const self = this;
+
     this.bar = new AJTESmallBar(this.args, this.cb);
 
     this.layer.on('click', function (evt) {
-      var shape = evt.target;
+      const shape = evt.target;
       if (shape.constructor.name == 'Image') {
         self.chooseElement(shape.attrs.id);
       }
@@ -3634,11 +3645,13 @@
 
   function AJTEAdminEditor(args) {
     AJTEEditor.call(this, args);
-    var self = this;
+
+    const self = this;
+
     this.bar = new AJTEBar(this.args, this.cb);
 
     this.layer.on('click', function (evt) {
-      var shape = evt.target;
+      const shape = evt.target;
       self.chooseElement(shape.attrs.id);
     });
 
