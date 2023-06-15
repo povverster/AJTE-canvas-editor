@@ -14,7 +14,7 @@
     factory(global);
   }
 })(typeof window !== 'undefined' ? window : this, (window) => {
-  const ajteMode = 'prod';
+  const ajteMode = 'dev';
 
   // !!! TEMPORARY SOLUTION !!!
   const transformers = [];
@@ -1878,20 +1878,36 @@
     }
 
     const self = this;
-    const position = this.el.getClientRect();
+    // const position = this.el.getClientRect();
     const imageObj2 = new Image();
 
     imageObj2.onload = function () {
-      const koef = imageObj2.naturalWidth / position.width;
+      // const koef = imageObj2.naturalWidth / position.width;
       imageObj2.naturalHeight;
       self.el.image(imageObj2);
       self.el.attrs.src = src;
-      self.el.attrs.width = position.width;
-      self.el.attrs.height = imageObj2.naturalHeight / koef;
+      // self.el.attrs.width = position.width;
+      // self.el.attrs.height = imageObj2.naturalHeight / koef;
       self.AJTEEditor.addToHistory();
       self.setLabelPosition();
-      self.transformer.forceUpdate();
-      self.layer.draw();
+
+      // self.transformer.forceUpdate();
+      // self.layer.draw();
+
+      if (transformers && transformers.length) {
+        for (let i = 0; i < transformers.length; i++) {
+          if (transformers[i] instanceof Konva.Transformer) {
+            const nodes = transformers[i].nodes();
+  
+            if (nodes.length) {
+              transformers[i].forceUpdate();
+            }
+          }
+        }
+      }
+  
+      this.stage.draw();
+      this.layer.draw();
     };
 
     imageObj2.src = src;
