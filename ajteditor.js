@@ -14,7 +14,7 @@
     factory(global);
   }
 })(typeof window !== 'undefined' ? window : this, (window) => {
-  const ajteMode = 'dev';
+  const ajteMode = 'prod';
 
   // !!! TEMPORARY SOLUTION !!!
   const transformers = [];
