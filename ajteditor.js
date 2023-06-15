@@ -1836,23 +1836,26 @@
       console.info('AJTEImage:onTransform');
     }
 
-    if (this.AJTEEditor instanceof AJTEUserEditor) {
-      const scale = this.el.scaleX();
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // !!! THIS CODE IS A SOURCE OG ERRORS FOR ARTWORKS !!!
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // if (this.AJTEEditor instanceof AJTEUserEditor) {
+    //   const scale = this.el.scaleX();
 
-      if (scale == 1) {
-        scale = this.el.scaleY();
-      }
+    //   if (scale == 1) {
+    //     scale = this.el.scaleY();
+    //   }
 
-      const width = this.el.width() * scale;
-      const height = this.el.height() * scale;
+    //   const width = this.el.width() * scale;
+    //   const height = this.el.height() * scale;
 
-      this.el.setAttrs({
-        width: width,
-        height: height,
-        scaleX: 1,
-        scaleY: 1
-      });
-    }
+    //   this.el.setAttrs({
+    //     width: width,
+    //     height: height,
+    //     scaleX: 1,
+    //     scaleY: 1
+    //   });
+    // }
 
     this.setLabelPosition();
   };
@@ -1906,8 +1909,8 @@
         }
       }
   
-      this.stage.draw();
-      this.layer.draw();
+      self.stage.draw();
+      self.layer.draw();
     };
 
     imageObj2.src = src;
@@ -3085,7 +3088,7 @@
     }
 
     this.beforeSave();
-    var storejson = JSON.stringify(this.storeToJSON());
+    const storejson = JSON.stringify(this.storeToJSON());
 
     if (this.saveInfo.url) {
       this.sendToServer(storejson, 'draft', type, cb);
