@@ -1871,8 +1871,10 @@
     const id = 'label_' + this.el.attrs.id;
     const el = document.getElementById(id);
 
-    el.style.top = position.y + 'px';
-    el.style.left = position.x + position.width + 'px';
+    // el.style.top = position.y + 'px';
+    // el.style.left = position.x + position.width + 'px';
+    el.style.top = position.y + Math.round(position.height / 2) + 'px';
+    el.style.left = position.x + Math.round(position.width / 2) + 'px';
   };
 
   AJTEImage.prototype.changeSrc = function (src) {
