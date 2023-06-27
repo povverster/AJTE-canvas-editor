@@ -977,34 +977,37 @@
 
     const self = this;
 
-    if (this instanceof AJTEImage && self.type === 'editableImage') {
-      self.transformer = new Konva.Transformer({
-        node: self.el,
-        anchorSize: 10,
-        borderEnabled: true
-      });
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // The changing of images forms is not necessary for artworks
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // if (this instanceof AJTEImage && self.type === 'editableImage') {
+    //   self.transformer = new Konva.Transformer({
+    //     node: self.el,
+    //     anchorSize: 10,
+    //     borderEnabled: true
+    //   });
 
-      transformers.push(self.transformer);
+    //   transformers.push(self.transformer);
 
-      self.el.setAttrs({
-        draggable: true
-      });
-      self.el.on('mouseover', function () {
-        self.elOnDrag(self.el);
-      });
+    //   self.el.setAttrs({
+    //     draggable: true
+    //   });
+    //   self.el.on('mouseover', function () {
+    //     self.elOnDrag(self.el);
+    //   });
 
-      self.el.on('mouseout', function () {
-        self.elOnDrop(self.el);
-      });
+    //   self.el.on('mouseout', function () {
+    //     self.elOnDrop(self.el);
+    //   });
 
-      self.el.on('transformend', function () {
-        self.addToHistoryAfterTransform(self);
-      });
-    } else {
-      self.el.setAttrs({
-        draggable: false
-      });
-    }
+    //   self.el.on('transformend', function () {
+    //     self.addToHistoryAfterTransform(self);
+    //   });
+    // } else {
+    self.el.setAttrs({
+      draggable: false
+    });
+    // }
   };
 
   AJTEElement.prototype.initActiveElement = function () {
@@ -1822,8 +1825,18 @@
     self.setLabelPosition();
 
     el.addEventListener('click', () => {
-      self.AJTEEditor.chooseElement(self.el.attrs.id);
-      self.editImage();
+      const img = new Image();
+
+      img.onload = () => {
+        self.el.attrs.prevSrc = self.el.attrs.src;
+        self.el.attrs.prevWidth = img.width;
+        self.el.attrs.prevHeight = img.height;
+
+        self.AJTEEditor.chooseElement(self.el.attrs.id);
+        self.editImage();
+      };
+
+      img.src = self.el.attrs.src;
     });
   };
 
@@ -1883,34 +1896,55 @@
     }
 
     const self = this;
-    // const position = this.el.getClientRect();
     const imageObj2 = new Image();
 
     imageObj2.onload = function () {
-      // const koef = imageObj2.naturalWidth / position.width;
-      imageObj2.naturalHeight;
       self.el.image(imageObj2);
       self.el.attrs.src = src;
-      // self.el.attrs.width = position.width;
-      // self.el.attrs.height = imageObj2.naturalHeight / koef;
+
+      if (
+        self.el.attrs.prevWidth !== self.el.attrs.image.width ||
+        self.el.attrs.prevHeight !== self.el.attrs.image.height
+      ) {
+        const msg = `You cannot use this image.<br />Please crop the image to ${self.el.attrs.prevWidth}x${self.el.attrs.prevHeight}px size<br /><a href="https://imageresizer.com/" target="_blank">imageresizer.com</a>`;
+
+        if (self.AJTEEditor.cb && self.AJTEEditor.cb.warning_cb) {
+          self.AJTEEditor.cb.warning_cb(msg);
+        } else {
+          alert(msg);
+        }
+
+        const img = new Image();
+        img.onload = () => {
+          self.el.image(img);
+          self.el.attrs.src = self.el.attrs.prevSrc;
+          self.stage.draw();
+          self.layer.draw();
+        };
+        img.src = self.el.attrs.prevSrc;
+
+        return;
+      }
+
+      self.el.attrs.prevSrc = undefined;
+      self.el.attrs.prevWidth = undefined;
+      self.el.attrs.prevHeight = undefined;
+
       self.AJTEEditor.addToHistory();
       self.setLabelPosition();
-
-      // self.transformer.forceUpdate();
-      // self.layer.draw();
 
       if (transformers && transformers.length) {
         for (let i = 0; i < transformers.length; i++) {
           if (transformers[i] instanceof Konva.Transformer) {
             const nodes = transformers[i].nodes();
-  
+
             if (nodes.length) {
               transformers[i].forceUpdate();
             }
           }
         }
       }
-  
+
       self.stage.draw();
       self.layer.draw();
     };
@@ -2459,26 +2493,29 @@
     }, 10);
 
     let ajteEditableImageTimerCounter = 0;
-    let ajteEditableImageTimer = setTimeout(function ajteEditableImageTimerTick() {
-      if (ajteEditableImageTimerCounter > 80) {
-        return;
-      }
+    let ajteEditableImageTimer = setTimeout(
+      function ajteEditableImageTimerTick() {
+        if (ajteEditableImageTimerCounter > 80) {
+          return;
+        }
 
-      const ajteEditableImage = document.getElementById('ajteEditableImage');
+        const ajteEditableImage = document.getElementById('ajteEditableImage');
 
-      if (ajteEditableImage) {
-        ajteEditableImage.addEventListener('click', () => {
-          if (self.args['editableImage']) {
-            self.args['editableImage'].isNew = true;
-          }
-        });
+        if (ajteEditableImage) {
+          ajteEditableImage.addEventListener('click', () => {
+            if (self.args['editableImage']) {
+              self.args['editableImage'].isNew = true;
+            }
+          });
 
-        return;
-      }
+          return;
+        }
 
-      ajteEditableImageTimerCounter++;
-      ajteEditableImageTimer = setTimeout(ajteEditableImageTimerTick, 400);
-    }, 10);
+        ajteEditableImageTimerCounter++;
+        ajteEditableImageTimer = setTimeout(ajteEditableImageTimerTick, 400);
+      },
+      10
+    );
     // ------------------------------------------
 
     document.addEventListener('libraryActiveFileChanged', function (event) {
