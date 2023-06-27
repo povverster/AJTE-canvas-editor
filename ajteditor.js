@@ -2521,20 +2521,25 @@
 
     document.addEventListener('libraryActiveFileChanged', function (event) {
       if (
-        !self.args['image'].isNew &&
         self.store.elements[self.currentElId] &&
         self.store.elements[self.currentElId] instanceof AJTEImage
       ) {
-        self.store.elements[self.currentElId].changeSrc(event.detail.src);
-      } else {
-        if (isEditableImage) {
-          self.args['editableImage'].isNew = false;
-          self.args['editableImage'].src = event.detail.src;
-          self.createElement(self.args['editableImage'], 'editableImage');
+        if (!isEditableImage) {
+          if (!self.args['image'].isNew) {
+            self.store.elements[self.currentElId].changeSrc(event.detail.src);
+          } else {
+            self.args['image'].isNew = false;
+            self.args['image'].src = event.detail.src;
+            self.createElement(self.args['image'], 'image');
+          }
         } else {
-          self.args['image'].isNew = false;
-          self.args['image'].src = event.detail.src;
-          self.createElement(self.args['image'], 'image');
+          if (!self.args['editableImage'].isNew) {
+            self.store.elements[self.currentElId].changeSrc(event.detail.src);
+          } else {
+            self.args['editableImage'].isNew = false;
+            self.args['editableImage'].src = event.detail.src;
+            self.createElement(self.args['editableImage'], 'editableImage');
+          }
         }
       }
 
