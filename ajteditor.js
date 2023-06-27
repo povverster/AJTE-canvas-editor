@@ -2253,14 +2253,14 @@
         src:
           args.image && args.image.src
             ? args.image.src
-            : 'no_image_available.png'
+            : null
       },
       editableImage: {
         isNew: false,
         src:
           args.image && args.image.src
             ? args.image.src
-            : 'no_image_available.png'
+            : null
       },
       text: {
         fill: args.font && args.font.fill ? args.font.fill : '#42445A',
@@ -2506,6 +2506,15 @@
           ajteEditableImage.addEventListener('click', () => {
             if (self.args['editableImage']) {
               self.args['editableImage'].isNew = true;
+              // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+              if (self.args['editableImage'].src && !self.store.elements[self.currentElId]) {
+                self.args['editableImage'].src = null;
+              }
+
+              console.log('>>> isEditableImage >>>', isEditableImage);
+              console.log('>>> args >>>', self.args['editableImage']);
+              console.log('>>> el >>>', self.store.elements[self.currentElId]);
+              // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }
           });
 
@@ -2520,31 +2529,56 @@
     // ------------------------------------------
 
     document.addEventListener('libraryActiveFileChanged', function (event) {
-      if (
-        self.store.elements[self.currentElId] &&
-        self.store.elements[self.currentElId] instanceof AJTEImage
-      ) {
-        if (!isEditableImage) {
-          if (!self.args['image'].isNew) {
-            self.store.elements[self.currentElId].changeSrc(event.detail.src);
-          } else {
-            self.args['image'].isNew = false;
-            self.args['image'].src = event.detail.src;
-            self.createElement(self.args['image'], 'image');
-          }
+      if (!isEditableImage) {
+        if (
+          !self.args['image'].isNew &&
+          self.store.elements[self.currentElId] &&
+          self.store.elements[self.currentElId] instanceof AJTEImage
+        ) {
+          self.store.elements[self.currentElId].changeSrc(event.detail.src);
         } else {
-          if (!self.args['editableImage'].isNew) {
-            self.store.elements[self.currentElId].changeSrc(event.detail.src);
-          } else {
-            self.args['editableImage'].isNew = false;
-            self.args['editableImage'].src = event.detail.src;
-            self.createElement(self.args['editableImage'], 'editableImage');
-          }
+          self.args['image'].isNew = false;
+          self.args['image'].src = event.detail.src;
+          self.createElement(self.args['image'], 'image');
+        }
+      } else {
+        if (
+          !self.args['editableImage'].isNew &&
+          self.store.elements[self.currentElId] &&
+          self.store.elements[self.currentElId] instanceof AJTEImage
+        ) {
+          self.store.elements[self.currentElId].changeSrc(event.detail.src);
+        } else {
+          self.args['editableImage'].isNew = false;
+          self.args['editableImage'].src = event.detail.src;
+          self.createElement(self.args['editableImage'], 'editableImage');
         }
       }
 
       return false;
     });
+
+    // document.addEventListener('libraryActiveFileChanged', function (event) {
+    //   if (
+    //     !self.args['image'].isNew &&
+    //     self.store.elements[self.currentElId] &&
+    //     self.store.elements[self.currentElId] instanceof AJTEImage
+    //   ) {
+    //     self.store.elements[self.currentElId].changeSrc(event.detail.src);
+    //   } else {
+    //     if (isEditableImage) {
+    //       self.args['editableImage'].isNew = false;
+    //       self.args['editableImage'].src = event.detail.src;
+    //       self.createElement(self.args['editableImage'], 'editableImage');
+    //     } else {
+    //       self.args['image'].isNew = false;
+    //       self.args['image'].src = event.detail.src;
+    //       self.createElement(self.args['image'], 'image');
+    //     }
+    //   }
+
+    //   return false;
+    // });
 
     const eventsKeysStack = [0, 0];
     document.addEventListener('keydown', function (event) {
