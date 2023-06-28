@@ -2507,13 +2507,18 @@
             if (self.args['editableImage']) {
               self.args['editableImage'].isNew = true;
               // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-              if (self.args['editableImage'].src && !self.store.elements[self.currentElId]) {
-                self.args['editableImage'].src = null;
-              }
+              // if (self.args['editableImage'].src && !self.store.elements[self.currentElId]) {
+              //   self.args['editableImage'].src = null;
+              //   delete self.store.elements[self.currentElId];
+              //   self.stage.draw();
+              //   self.layer.draw();
+              // }
 
-              console.log('>>> isEditableImage >>>', isEditableImage);
-              console.log('>>> args >>>', self.args['editableImage']);
-              console.log('>>> el >>>', self.store.elements[self.currentElId]);
+              // console.log('>>> self >>>', self);
+              // console.log('>>> isEditableImage [prev] >>>', isEditableImage);
+              // console.log('>>> args [prev] >>>', self.args['editableImage']);
+              // console.log('>>> els [prev] >>>', self.store.elements);
+              // console.log('>>> el [prev] >>>', self.store.elements[self.currentElId]);
               // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }
           });
@@ -2529,6 +2534,10 @@
     // ------------------------------------------
 
     document.addEventListener('libraryActiveFileChanged', function (event) {
+      // console.log('>>> isEditableImage [cur] >>>', isEditableImage);
+      // console.log('>>> args [cur] >>>', self.args['editableImage']);
+      // console.log('>>> el [cur] >>>', self.store.elements[self.currentElId]);
+
       if (!isEditableImage) {
         if (
           !self.args['image'].isNew &&
