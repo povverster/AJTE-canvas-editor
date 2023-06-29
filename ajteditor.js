@@ -1831,6 +1831,12 @@
     self.setLabelPosition();
 
     el.addEventListener('click', () => {
+      if (self.type === 'image')  {
+        self.AJTEEditor.args['image'].isNew = false;
+      } else if (self.type === 'editableImage')  {
+        self.AJTEEditor.args['editableImage'].isNew = false;
+      }
+
       const img = new Image();
 
       img.onload = () => {
