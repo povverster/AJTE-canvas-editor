@@ -907,10 +907,10 @@
     btns.innerHTML =
       '<div> \
             <div class="ajtefirstbtnline">    \
-                <a href="#" class="ajte-btn" data-action="save"><span>SAVE AS DRAFT</span></a>  \
-                <a href="#" class="ajte-btn ajte-btn-green" data-action="send"><span>SEND</span></a>  \
-                <a href="#" class="ajte-btn ajte-btn-dark" data-action="download"><i class="fa fa-download"></i><span>DOWNLOAD AS PNG</span></a> \
-                <a href="#" class="ajte-btn ajte-btn-dark ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>DOWNLOAD AS PDF</span></a> \
+                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--save-draft" data-action="save"><span>SAVE AS DRAFT</span></a>  \
+                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--send" data-action="send"><span>SEND</span></a>  \
+                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>DOWNLOAD AS PNG</span></a> \
+                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>DOWNLOAD AS PDF</span></a> \
             </div> \
         </div>';
     asideButtons.appendChild(btns);
@@ -3623,11 +3623,11 @@
     btns.innerHTML =
       '<ul class="aside-btn-wrap"> \
             <li class="ajtefirstbtnline">    \
-                <a href="#" class="ajte-btn" data-action="save"><span>SAVE AS DRAFT</span></a>  \
-                <a href="#" class="ajte-btn ajte-btn-green" data-action="send"><span>SAVE</span></a>  \
+                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--save-draft" data-action="save"><span>SAVE AS DRAFT</span></a>  \
+                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--save" data-action="send"><span>SAVE</span></a>  \
             </li> \
-            <li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn-dark" data-action="download"><i class="fa fa-download"></i><span>DOWNLOAD AS PNG</span></a></li> \
-            <li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn-dark ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>DOWNLOAD AS PDF</span></a></li> \
+            <li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>DOWNLOAD AS PNG</span></a></li> \
+            <li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>DOWNLOAD AS PDF</span></a></li> \
         </ul>';
     asideButtons.appendChild(btns);
   };
