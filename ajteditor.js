@@ -1831,9 +1831,9 @@
     self.setLabelPosition();
 
     el.addEventListener('click', () => {
-      if (self.type === 'image')  {
+      if (self.type === 'image') {
         self.AJTEEditor.args['image'].isNew = false;
-      } else if (self.type === 'editableImage')  {
+      } else if (self.type === 'editableImage') {
         self.AJTEEditor.args['editableImage'].isNew = false;
       }
 
@@ -2262,17 +2262,11 @@
       },
       image: {
         isNew: false,
-        src:
-          args.image && args.image.src
-            ? args.image.src
-            : null
+        src: args.image && args.image.src ? args.image.src : null
       },
       editableImage: {
         isNew: false,
-        src:
-          args.image && args.image.src
-            ? args.image.src
-            : null
+        src: args.image && args.image.src ? args.image.src : null
       },
       text: {
         fill: args.font && args.font.fill ? args.font.fill : '#42445A',
@@ -3678,26 +3672,18 @@
   AJTEUserEditor.prototype = Object.create(AJTEEditor.prototype);
 
   AJTEUserEditor.prototype.addAsideCustomFields = function () {
-    var self = this;
+    const self = this;
 
     for (var i in this.customFields) {
-      var field = this.customFields[i];
-      var el = document.createElement('div');
-      el.className = 'ajte-input-wrap';
-      var content =
-        '<label for="' +
-        field.name +
-        '">' +
-        field.label +
-        '</label> \
-                <textarea id="input_' +
-        field.name +
-        '" name="' +
-        field.name +
-        '" class="ajte-input"';
+      const field = this.customFields[i];
+      const el = document.createElement('div');
 
-      for (var j = 0; j < field.validation.length; i++) {
-        for (var val_key in field.validation[j]) {
+      el.className = 'ajte-input-wrap';
+
+      const content = `<label for="${field.name}">${field.label}</label><textarea id="input_${field.name}" name="${field.name}" class="ajte-input"`;
+
+      for (let j = 0; j < field.validation.length; i++) {
+        for (let val_key in field.validation[j]) {
           switch (val_key) {
             case 'max':
               content += ' maxlength="' + field.validation[j][val_key] + '" ';
@@ -3706,7 +3692,18 @@
         }
       }
 
-      content += ' rows="1">' + field.value + '</textarea>';
+      let rows = Math.ceil(field.value / 36);
+
+      if (rows < 1) {
+        rows = 1;
+      }
+
+      if (rows > 10) {
+        rows = 10;
+      }
+
+      content += ` rows="${rows}">${field.value}</textarea>`;
+
       if (field.comment) {
         content += field.comment;
       }
@@ -3715,38 +3712,45 @@
 
       this.formContainer.appendChild(el);
 
-      var input = document.getElementById('input_' + field.name);
-      input.addEventListener('keyup', function (e) {
-        var id = e.target.id;
-        var el_id = id.slice(6);
+      const input = document.getElementById(`input_${field.name}`);
+      input.addEventListener('keyup', (e) => {
+        const id = e.target.id;
+        const el_id = id.slice(6);
         self.customFields[el_id].value = e.target.value;
       });
     }
   };
 
   AJTEUserEditor.prototype.addInput = function (type, id) {
-    if (type != 'editableText') return;
-    var self = this;
-    var el = document.createElement('div');
+    if (type !== 'editableText') {
+      return;
+    }
+
+    const self = this;
+    const el = document.createElement('div');
     el.className = 'ajte-input-wrap';
-    el.innerHTML =
-      '<label>' +
-      this.store.elements[id].label +
-      ':</label> \
-            <textarea id="input_' +
-      id +
-      '" name="' +
-      id +
-      '" class="ajte-input" rows="1">' +
-      this.store.elements[id].value +
-      '</textarea>';
+
+    const inpLbl = this.store.elements[id].label;
+    const inpVal = this.store.elements[id].value;
+
+    let rows = Math.ceil(inpVal.length / 36);
+
+    if (rows < 1) {
+      rows = 1;
+    }
+
+    if (rows > 10) {
+      rows = 10;
+    }
+
+    el.innerHTML = `<label>${inpLbl}:</label><textarea id="input_${id}" name="${id}" class="ajte-input" rows="${rows}">${inpVal}</textarea>`;
 
     this.formContainer.appendChild(el);
 
-    var input = document.getElementById('input_' + id);
-    input.addEventListener('keyup', function (e) {
-      var id = e.target.id;
-      var el_id = id.slice(6);
+    const input = document.getElementById(`input_${id}`);
+    input.addEventListener('keyup', (e) => {
+      const id = e.target.id;
+      const el_id = id.slice(6);
       self.store.elements[el_id].changeValue(e.target.value);
     });
   };
