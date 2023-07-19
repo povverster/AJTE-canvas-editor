@@ -1922,19 +1922,19 @@
       ) {
         if (
           !changedImages[self.el.attrs.id] ||
-          !changedImages[self.el.attrs.id].canvasWidth ||
-          !changedImages[self.el.attrs.id].canvasHeight
+          !changedImages[self.el.attrs.id].imgAreaWidth ||
+          !changedImages[self.el.attrs.id].imgAreaHeight
         ) {
           changedImages[self.el.attrs.id] = {
-            canvasWidth: self.el.attrs.prevWidth,
-            canvasHeight: self.el.attrs.prevHeight
+            imgAreaWidth: self.el.attrs.prevWidth,
+            imgAreaHeight: self.el.attrs.prevHeight
           };
         }
       }
 
       const prevRatio =
-        changedImages[self.el.attrs.id].canvasHeight /
-        changedImages[self.el.attrs.id].canvasWidth;
+        changedImages[self.el.attrs.id].imgAreaHeight /
+        changedImages[self.el.attrs.id].imgAreaWidth;
       const curRatio = self.el.attrs.image.height / self.el.attrs.image.width;
 
       if (
@@ -1942,9 +1942,9 @@
         Math.abs(prevRatio - curRatio) > 0.01
       ) {
         const msg = `You cannot use this image.<br />Please crop the image to ${
-          changedImages[self.el.attrs.id].canvasWidth
+          changedImages[self.el.attrs.id].imgAreaWidth
         }x${
-          changedImages[self.el.attrs.id].canvasHeight
+          changedImages[self.el.attrs.id].imgAreaHeight
         }px size<br /><a href="https://imageresizer.com/" target="_blank">imageresizer.com</a>`;
 
         if (self.AJTEEditor.cb && self.AJTEEditor.cb.warning_cb) {
@@ -1959,11 +1959,11 @@
           self.el.attrs.src = self.el.attrs.prevSrc;
 
           if (
-            changedImages[self.el.attrs.id].canvasWidth &&
-            changedImages[self.el.attrs.id].canvasHeight
+            changedImages[self.el.attrs.id].imgAreaWidth &&
+            changedImages[self.el.attrs.id].imgAreaHeight
           ) {
-            img.width = changedImages[self.el.attrs.id].canvasWidth;
-            img.height = changedImages[self.el.attrs.id].canvasHeight;
+            img.width = changedImages[self.el.attrs.id].imgAreaWidth;
+            img.height = changedImages[self.el.attrs.id].imgAreaHeight;
           }
 
           self.stage.draw();
@@ -1976,21 +1976,23 @@
 
       if (
         ajteEditorArgs.context === 'artwork' &&
-        changedImages[self.el.attrs.id].canvasWidth &&
-        changedImages[self.el.attrs.id].canvasHeight
+        changedImages[self.el.attrs.id].imgAreaWidth &&
+        changedImages[self.el.attrs.id].imgAreaHeight
       ) {
-        imageObj2.width = changedImages[self.el.attrs.id].canvasWidth;
-        imageObj2.height = changedImages[self.el.attrs.id].canvasHeight;
+        imageObj2.width = changedImages[self.el.attrs.id].imgAreaWidth;
+        imageObj2.height = changedImages[self.el.attrs.id].imgAreaHeight;
 
-        self.el.attrs.scaleX = 1;
-        self.el.attrs.scaleY = 1;
+        if (!self.el.attrs.scaleX) {
+          self.el.attrs.scaleX = 1;
+        }
 
-        if (
-          imageObj2.naturalWidth > imageObj2.width &&
-          imageObj2.naturalHeight > imageObj2.height
-        ) {
-          self.el.attrs.scaleX = imageObj2.width / imageObj2.naturalWidth;
-          self.el.attrs.scaleY = imageObj2.height / imageObj2.naturalHeight;
+        if (!self.el.attrs.scaleY) {
+          self.el.attrs.scaleY = 1;
+        }
+
+        if (imageObj2.naturalWidth && imageObj2.naturalHeight) {
+          self.el.attrs.scaleX = self.el.attrs.scaleX * (imageObj2.width / imageObj2.naturalWidth);
+          self.el.attrs.scaleY = self.el.attrs.scaleY * (imageObj2.height / imageObj2.naturalHeight);
         }
       }
 
