@@ -1914,10 +1914,14 @@
       self.el.image(imageObj2);
       self.el.attrs.src = src;
 
+      const prevRatio = self.el.attrs.prevHeight / self.el.attrs.prevWidth;
+      const curRatio = self.el.attrs.image.height / self.el.attrs.image.width;
+
       if (
         ajteEditorArgs.context === 'artwork' &&
-        (Math.abs(self.el.attrs.prevWidth - self.el.attrs.image.width) > 2 ||
-          Math.abs(self.el.attrs.prevHeight - self.el.attrs.image.height) > 2)
+        (Math.abs(prevRatio - curRatio) > 0.02 ||
+          self.el.attrs.image.width < self.el.attrs.prevWidth - 2 ||
+          self.el.attrs.image.height < self.el.attrs.prevHeight - 2)
       ) {
         const msg = `You cannot use this image.<br />Please crop the image to ${self.el.attrs.prevWidth}x${self.el.attrs.prevHeight}px size<br /><a href="https://imageresizer.com/" target="_blank">imageresizer.com</a>`;
 
