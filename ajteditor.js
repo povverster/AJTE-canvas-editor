@@ -22,6 +22,7 @@
 
   let ajteEditorArgs = {};
   let isEditableImage = false;
+  let changedImages = {};
 
   function AJTESwitcher(el, input, cb) {
     this.el = el;
@@ -1914,16 +1915,16 @@
       self.el.image(imageObj2);
       self.el.attrs.src = src;
 
-      const prevRatio = self.el.attrs.prevHeight / self.el.attrs.prevWidth;
+      const prevRatio = changedImages[self.el.attrs.id].canvasHeight / changedImages[self.el.attrs.id].canvasWidth;
       const curRatio = self.el.attrs.image.height / self.el.attrs.image.width;
 
       if (
         ajteEditorArgs.context === 'artwork' &&
         (Math.abs(prevRatio - curRatio) > 0.02 ||
-          self.el.attrs.image.width < self.el.attrs.prevWidth - 2 ||
-          self.el.attrs.image.height < self.el.attrs.prevHeight - 2)
+          self.el.attrs.image.width < changedImages[self.el.attrs.id].canvasWidth - 2 ||
+          self.el.attrs.image.height < changedImages[self.el.attrs.id].canvasHeight - 2)
       ) {
-        const msg = `You cannot use this image.<br />Please crop the image to ${self.el.attrs.prevWidth}x${self.el.attrs.prevHeight}px size<br /><a href="https://imageresizer.com/" target="_blank">imageresizer.com</a>`;
+        const msg = `You cannot use this image.<br />Please crop the image to ${changedImages[self.el.attrs.id].canvasWidth}x${changedImages[self.el.attrs.id].canvasHeight}px size<br /><a href="https://imageresizer.com/" target="_blank">imageresizer.com</a>`;
 
         if (self.AJTEEditor.cb && self.AJTEEditor.cb.warning_cb) {
           self.AJTEEditor.cb.warning_cb(msg);
@@ -1965,6 +1966,22 @@
       self.stage.draw();
       self.layer.draw();
     };
+
+    if (ajteEditorArgs.context === 'artwork' && self.el.attrs.prevWidth && self.el.attrs.prevHeight) {
+      if (
+        !changedImages[self.el.attrs.id] ||
+        !changedImages[self.el.attrs.id].canvasWidth ||
+        !changedImages[self.el.attrs.id].canvasHeight
+      ) {
+        changedImages[self.el.attrs.id] = {
+          canvasWidth: self.el.attrs.prevWidth,
+          canvasHeight: self.el.attrs.prevHeight
+        }
+      }
+
+      imageObj2.width = changedImages[self.el.attrs.id].canvasWidth;
+      imageObj2.height = changedImages[self.el.attrs.id].canvasHeight;
+    }
 
     imageObj2.src = src;
   };
