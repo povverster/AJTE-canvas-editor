@@ -1932,10 +1932,15 @@
         }
       }
 
-      const prevRatio =
-        changedImages[self.el.attrs.id].imgAreaHeight /
-        changedImages[self.el.attrs.id].imgAreaWidth;
-      const curRatio = self.el.attrs.image.height / self.el.attrs.image.width;
+      let prevRatio = 0;
+      let curRatio = 0;
+
+      if (ajteEditorArgs.context === 'artwork') {
+        prevRatio =
+          changedImages[self.el.attrs.id].imgAreaHeight /
+          changedImages[self.el.attrs.id].imgAreaWidth;
+        curRatio = self.el.attrs.image.height / self.el.attrs.image.width;
+      }
 
       if (
         ajteEditorArgs.context === 'artwork' &&
@@ -1991,8 +1996,10 @@
         }
 
         if (imageObj2.naturalWidth && imageObj2.naturalHeight) {
-          self.el.attrs.scaleX = self.el.attrs.scaleX * (imageObj2.width / imageObj2.naturalWidth);
-          self.el.attrs.scaleY = self.el.attrs.scaleY * (imageObj2.height / imageObj2.naturalHeight);
+          self.el.attrs.scaleX =
+            self.el.attrs.scaleX * (imageObj2.width / imageObj2.naturalWidth);
+          self.el.attrs.scaleY =
+            self.el.attrs.scaleY * (imageObj2.height / imageObj2.naturalHeight);
         }
       }
 
