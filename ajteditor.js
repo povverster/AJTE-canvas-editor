@@ -1915,6 +1915,19 @@
       self.el.image(imageObj2);
       self.el.attrs.src = src;
 
+      if (ajteEditorArgs.context === 'artwork' && self.el.attrs.prevWidth && self.el.attrs.prevHeight) {
+        if (
+          !changedImages[self.el.attrs.id] ||
+          !changedImages[self.el.attrs.id].canvasWidth ||
+          !changedImages[self.el.attrs.id].canvasHeight
+        ) {
+          changedImages[self.el.attrs.id] = {
+            canvasWidth: self.el.attrs.prevWidth,
+            canvasHeight: self.el.attrs.prevHeight
+          }
+        }
+      }
+
       const prevRatio = changedImages[self.el.attrs.id].canvasHeight / changedImages[self.el.attrs.id].canvasWidth;
       const curRatio = self.el.attrs.image.height / self.el.attrs.image.width;
 
@@ -1936,12 +1949,23 @@
         img.onload = () => {
           self.el.image(img);
           self.el.attrs.src = self.el.attrs.prevSrc;
+
+          if (changedImages[self.el.attrs.id].canvasWidth && changedImages[self.el.attrs.id].canvasHeight) {  
+            img.width = changedImages[self.el.attrs.id].canvasWidth;
+            img.height = changedImages[self.el.attrs.id].canvasHeight;
+          }
+
           self.stage.draw();
           self.layer.draw();
         };
         img.src = self.el.attrs.prevSrc;
 
         return;
+      }
+
+      if (ajteEditorArgs.context === 'artwork' && changedImages[self.el.attrs.id].canvasWidth && changedImages[self.el.attrs.id].canvasHeight) {  
+        imageObj2.width = changedImages[self.el.attrs.id].canvasWidth;
+        imageObj2.height = changedImages[self.el.attrs.id].canvasHeight;
       }
 
       self.el.attrs.prevSrc = undefined;
@@ -1966,22 +1990,6 @@
       self.stage.draw();
       self.layer.draw();
     };
-
-    if (ajteEditorArgs.context === 'artwork' && self.el.attrs.prevWidth && self.el.attrs.prevHeight) {
-      if (
-        !changedImages[self.el.attrs.id] ||
-        !changedImages[self.el.attrs.id].canvasWidth ||
-        !changedImages[self.el.attrs.id].canvasHeight
-      ) {
-        changedImages[self.el.attrs.id] = {
-          canvasWidth: self.el.attrs.prevWidth,
-          canvasHeight: self.el.attrs.prevHeight
-        }
-      }
-
-      imageObj2.width = changedImages[self.el.attrs.id].canvasWidth;
-      imageObj2.height = changedImages[self.el.attrs.id].canvasHeight;
-    }
 
     imageObj2.src = src;
   };
