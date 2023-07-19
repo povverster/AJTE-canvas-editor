@@ -1981,6 +1981,17 @@
       ) {
         imageObj2.width = changedImages[self.el.attrs.id].canvasWidth;
         imageObj2.height = changedImages[self.el.attrs.id].canvasHeight;
+
+        self.el.attrs.scaleX = 1;
+        self.el.attrs.scaleY = 1;
+
+        if (
+          imageObj2.naturalWidth > imageObj2.width &&
+          imageObj2.naturalHeight > imageObj2.height
+        ) {
+          self.el.attrs.scaleX = imageObj2.width / imageObj2.naturalWidth;
+          self.el.attrs.scaleY = imageObj2.height / imageObj2.naturalHeight;
+        }
       }
 
       self.el.attrs.prevSrc = undefined;
