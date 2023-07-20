@@ -1946,11 +1946,7 @@
         ajteEditorArgs.context === 'artwork' &&
         Math.abs(prevRatio - curRatio) > 0.01
       ) {
-        const msg = `You cannot use this image.<br />Please crop the image to ${
-          changedImages[self.el.attrs.id].imgAreaWidth
-        }x${
-          changedImages[self.el.attrs.id].imgAreaHeight
-        }px size<br /><a href="https://imageresizer.com/" target="_blank">imageresizer.com</a>`;
+        const msg = `Sorry. This image is not in the correct format. Please make sure the image is cropped in a 1:1 ratio.`;
 
         if (self.AJTEEditor.cb && self.AJTEEditor.cb.warning_cb) {
           self.AJTEEditor.cb.warning_cb(msg);
