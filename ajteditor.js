@@ -3365,6 +3365,10 @@
       });
     }
 
+    if (this.cb && this.cb.before_sending_cb) {
+      this.cb.before_sending_cb();
+    }
+
     xhr.send(formData);
   };
 
