@@ -1,4 +1,7 @@
 'use strict';
+
+const { forEach } = require('lodash');
+
 (function (global, factory) {
   if (typeof module === 'object' && typeof module.exports === 'object') {
     window.Pickr = require('@simonwep/pickr');
@@ -193,7 +196,8 @@
         'Courier New',
         'Georgia',
         'Trebuchet MS',
-        'Verdana'
+        'Verdana',
+        'Poppins'
       ]
     };
 
@@ -912,6 +916,7 @@
                 <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--send" data-action="send"><span>Send</span></a>  \
                 <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a> \
                 <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>Download as PDF</span></a> \
+                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--danger ajte-btn--restore-to-default" data-action="default" ><i class="fa fa-trash-restore"></i><span>Restore to Default</span></a> \
             </div> \
         </div>';
     asideButtons.appendChild(btns);
@@ -1417,7 +1422,7 @@
 
     this.text = args && args.text ? args.text : 'simpleText';
     this.fontSize = args && args.fontSize ? args.fontSize : 14;
-    this.fontFamily = args && args.fontFamily ? args.fontFamily : 'Helvetica';
+    this.fontFamily = args && args.fontFamily ? args.fontFamily : 'Poppins';
     this.fill = args && args.fill ? args.fill : 'black';
     this.x = args && args.x ? args.x : 0;
     this.y = args && args.y ? args.y : 0;
@@ -1440,6 +1445,10 @@
     this.bind_id = args && args.bind_id ? args.bind_id : 0;
     this.align = args && args.align ? args.align : 'left';
     this.id = args && args.id ? args.id : 'text-' + Date.now();
+
+    this.fieldType = args && args.fieldType ? args.fieldType : 'string';
+    this.list = args && args.list ? args.list : '';
+    this.json = args && args.json ? args.json : '';
 
     this.init = function () {
       const textDecoration = this.isUnderline ? 'underline' : 'none';
@@ -1487,7 +1496,10 @@
         paddingBottom: self.paddingBottom,
         paddingLeft: self.paddingLeft,
         lineHeight: self.lineHeight,
-        bind_id: self.bind_id
+        bind_id: self.bind_id,
+        fieldType: self.fieldType,
+        list: self.list,
+        json: self.json,
       });
 
       self.layer.add(self.el);
@@ -1524,6 +1536,7 @@
     self.el.hide();
     self.transformer.hide();
     self.layer.draw();
+
 
     const areaPosition = {
       x: stageBox.left + textPosition.x,
@@ -2344,7 +2357,7 @@
         fontFamily:
           args.fontFamily && args.font.fontFamily
             ? args.font.fontFamily
-            : 'Verdana',
+            : 'Poppins',
         isItalic: false,
         isBold: false,
         isUnderline: false
@@ -2365,7 +2378,7 @@
         fontFamily:
           args.fontFamily && args.font.fontFamily
             ? args.font.fontFamily
-            : 'Verdana',
+            : 'Poppins',
         isItalic: false,
         isBold: false,
         isUnderline: false
@@ -2413,6 +2426,7 @@
       }
     };
 
+    this.code = null;
     this.bar = null;
     this.category = args.category ? args.category : '';
     this.cb = args.cb || {
@@ -2508,8 +2522,8 @@
       }
 
       this.addEventListeners();
-
       if (args.code) {
+        this.code = args.code;
         this.initDraw(args.code);
       }
 
@@ -3173,6 +3187,7 @@
       elements: {}
     };
 
+    
     for (let i in this.store.elements) {
       if (this.store && this.store.elements && this.store.elements[i]) {
         json.elements[i] = this.store.elements[i].el;
@@ -3228,33 +3243,79 @@
   };
 
   AJTEEditor.prototype.save = function (type = 'visible', cb) {
+    const self = this;
     if (ajteMode == 'dev') {
       console.info('AJTEEditor:save');
     }
 
-    this.beforeSave();
-    const storejson = JSON.stringify(this.storeToJSON());
+    var form = document.getElementById('ajteasideformfull');
+    var submit = document.getElementById('artwork_submit');
 
-    if (this.saveInfo.url) {
-      this.sendToServer(storejson, 'draft', type, cb);
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+    });
+
+    function sendData(e){
+      e.preventDefault();
+      if (form.checkValidity()) {
+        self.beforeSave();
+        const storejson = JSON.stringify(self.storeToJSON());
+        if (self.saveInfo.url) {
+          self.sendToServer(storejson, 'draft', type, cb);
+        }
+        return storejson;
+      } else {
+        self.cb.error_cb('Please fill all fields');
+        form.reportValidity();
+      }
     }
+    form.addEventListener('click', sendData);
+    submit.click();
+    form.removeEventListener('click', sendData);
 
-    return storejson;
+    
   };
 
   AJTEEditor.prototype.send = function (type = 'visible', cb) {
+    const self = this;
     if (ajteMode == 'dev') {
       console.info('AJTEEditor:send');
     }
+    
+    var form = document.getElementById('ajteasideformfull');
+    var submit = document.getElementById('artwork_submit');
 
-    this.beforeSave();
-    var storejson = JSON.stringify(this.storeToJSON());
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+    });
 
-    if (this.saveInfo.url) {
-      this.sendToServer(storejson, 'approved', type, cb);
+    function sendData(e){
+      e.preventDefault();
+      if (form.checkValidity()) {
+        self.beforeSave();
+        var storejson = JSON.stringify(self.storeToJSON());
+        if (self.saveInfo.url) {
+          self.sendToServer(storejson, 'approved', type, cb);
+        }
+        return storejson;
+      } else {
+        self.cb.error_cb('Please fill all fields');
+        form.reportValidity();
+      }
     }
+    form.addEventListener('click', sendData);
+    submit.click();
+    form.removeEventListener('click', sendData);
+    
+  };
 
-    return storejson;
+  AJTEEditor.prototype.default = function (type = 'visible', cb, e) {
+    if (ajteMode == 'dev') {
+      console.info('AJTEEditor:default');
+    }
+    if (window.confirm("Are you sure you want to Restore?")) {
+      this.initDraw(this.code);
+    }
   };
 
   AJTEEditor.prototype.createDataUrl = function () {
@@ -3314,6 +3375,7 @@
     let formData = new FormData();
     formData.append('title', this.title);
     formData.append('code', storejson);
+    // formData.append('code', storejson);
     formData.append('category', this.category);
     formData.append('preview', dataURL);
     formData.append('status', status);
@@ -3363,10 +3425,6 @@
           xhr.setRequestHeader(key, value);
         }
       });
-    }
-
-    if (this.cb && this.cb.before_sending_cb) {
-      this.cb.before_sending_cb();
     }
 
     xhr.send(formData);
@@ -3515,7 +3573,6 @@
     }
 
     var self = this;
-
     var el = document.createElement('div');
     el.className = 'ajte-input-wrap';
     el.innerHTML =
@@ -3529,16 +3586,97 @@
       '" class="ajte-input" value="' +
       this.store.elements[id].label +
       '"/>';
+      
+      if (type === 'editableText') {
+        var element = this.store.elements[id];
+        var fieldType = element.fieldType;
+        var list = element.list;
+        var json = element.json;
 
+        var selectHtml = 
+        `<select id="select_${id}">
+          <option value="string" ${fieldType === 'string' ? 'selected' : ''}>String</option>
+          <option value="list" ${fieldType === 'list' ? 'selected' : ''}>List</option>
+          <option value="json" ${fieldType === 'json' ? 'selected' : ''}>Json import</option>
+        </select>`;
+  
+        // Creating the textarea
+        var textareaHtml = `<textarea id="list_${id}" class="mt-10" style="${fieldType !== 'list' ? 'display:none;' : ''}">${list}</textarea>`;
+        // Creating the file input
+        var inputHtml = `<input type="file" id="json_${id}" class="mt-10" accept=".json" style="${fieldType === 'json' ? '' : 'display:none;'} "/>`;
+        // Appending all HTML elements to el
+        el.innerHTML += `Type : ${selectHtml}${textareaHtml}${inputHtml}`;
+      }
+
+      
     this.formContainer.appendChild(el);
 
     var input = document.getElementById('input_' + id);
+    
+    if (type === 'editableText') {
+      var select = document.getElementById('select_' + id);
+      var list = document.getElementById('list_' + id);
+      var json = document.getElementById('json_' + id);
+      
+    }
+    var el_id = id.slice(6);
+    
     input.addEventListener('blur', function (e) {
-      var id = e.target.id;
-      var el_id = id.slice(6);
-      self.store.elements[el_id].label = e.target.value;
-      self.store.elements[el_id].el.attrs.label = e.target.value;
+      
+      self.store.elements[id].label = e.target.value;
+      self.store.elements[id].el.attrs.label = e.target.value;
     });
+
+    if (type === 'editableText') {
+
+      select.addEventListener('change', function (e) {
+        if(e.target.value === 'string'){
+            list.style.display = 'none';
+            json.style.display = 'none';
+            self.store.elements[id].fieldType = e.target.value;
+            self.store.elements[id].el.attrs.fieldType = e.target.value;
+        }else if(e.target.value === 'list'){
+          list.style.display = 'block';
+          json.style.display = 'none';
+          self.store.elements[id].fieldType = e.target.value;
+          self.store.elements[id].el.attrs.fieldType = e.target.value;
+        }else if(e.target.value === 'json'){
+          list.style.display = 'none';
+          json.style.display = 'block';
+          self.store.elements[id].fieldType = e.target.value;
+          self.store.elements[id].el.attrs.fieldType = e.target.value;
+        }
+      });
+
+      list.addEventListener('blur', function (e) {
+        //Remove extraspace at start line
+        let trimmedList = e.target.value.replace(/^\s+/gm, '');
+        self.store.elements[id].list = trimmedList;
+        self.store.elements[id].el.attrs.list = trimmedList;
+      });
+
+      json.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                try {
+                    const result = event.target.result;
+                    const jsonObject = JSON.parse(result);
+                    const jsonString = JSON.stringify(jsonObject);
+                    self.store.elements[id].json = jsonString;
+                    self.store.elements[id].el.attrs.json = jsonString;
+                } catch (e) {
+                    alert('Invalid JSON file');
+                }
+            };
+            reader.onerror = () => alert('Error reading file');
+            reader.readAsText(file);
+        }
+      });
+    }
   };
 
   AJTEEditor.prototype.addToHistory = function () {
@@ -3588,11 +3726,14 @@
             <div id="ajtebar" class="ajtebar"> \
             </div> \
             <div id="ajtecontent"> \
-                <div id="ajteaside"> \
+                <form id="ajteasideformfull"> \
+                  <div id="ajteaside"> \
                     <div id="ajteasidetitle"></div> \
                     <div id="ajteasideform"></div> \
                     <div id="ajteasidebuttons"></div> \
-                </div> \
+                  </div> \
+                  <input type="submit" id="artwork_submit" hidden> \
+                </form> \
                 <div id="ajtemainbar">  \
                 </div>  \
                 <div id="ajteloader">   \
@@ -3641,7 +3782,7 @@
     tit.className = 'ajte-input-wrap';
     tit.innerHTML =
       '<label>Title:</label> \
-            <input type="text" id="arttitle" name="arttitle" class="ajte-input" value="' +
+            <input type="text" required id="arttitle" name="arttitle" class="ajte-input" value="' +
       this.title +
       '"/>';
     asideTitle.appendChild(tit);
@@ -3654,7 +3795,7 @@
     category.className = 'ajte-input-wrap categories-group autocomplete';
     category.innerHTML =
       '<label>Category:</label> \
-            <input type="text" id="artcategory" name="artcategory" class="ajte-input" value="' +
+            <input type="text" required id="artcategory" name="artcategory" class="ajte-input" value="' +
       this.category +
       '"/>';
     asideTitle.appendChild(category);
@@ -3741,7 +3882,6 @@
     for (var i in this.customFields) {
       const field = this.customFields[i];
       const el = document.createElement('div');
-
       el.className = 'ajte-input-wrap';
 
       const content = `<label for="${field.name}">${field.label}</label><textarea id="input_${field.name}" name="${field.name}" class="ajte-input"`;
@@ -3807,16 +3947,65 @@
       rows = 10;
     }
 
-    el.innerHTML = `<label>${inpLbl}:</label><textarea id="input_${id}" name="${id}" class="ajte-input" rows="${rows}">${inpVal}</textarea>`;
+    
+
+    if(this.store.elements[id].fieldType === 'string'){
+      el.innerHTML = `<label>${inpLbl}:</label><textarea id="input_${id}" name="${id}" class="ajte-input" rows="${rows}" required>${inpVal}</textarea>`;
+    }else if(this.store.elements[id].fieldType === 'list'){
+      const list = this.store.elements[id].list;
+      var list_parts = list.trim().split('\n');
+      var list_options = '';
+      list_parts.forEach(element => {
+        list_options += `<option value="${element}">${element}</option>`;
+      });
+      el.innerHTML = `<label>${inpLbl}:</label><select required id="select_${id}" name="${id}" class="ajte-input" ><option value="" disabled selected>Please select</option>${list_options}</select>`;
+    }else if(this.store.elements[id].fieldType === 'json'){
+      const json = this.store.elements[id].json;
+      var regions = JSON.parse(json);
+      regions.sort((a, b) => a.order - b.order);
+      let optionsHTML = "";
+      regions.forEach((region, index) => {
+          optionsHTML += `<option value="${region.name}">${region.name}</option>`;
+      });
+      el.innerHTML = `<label>${inpLbl}:</label><select required id="json_${id}" name="${id}" class="ajte-input" ><option value="" selected disabled>Please select</option>${optionsHTML}</select><select style="display:none;" class="mt-10" id="items_${id}" name="${id}" class="ajte-input" ></select>`;
+    }
+    
 
     this.formContainer.appendChild(el);
 
     const input = document.getElementById(`input_${id}`);
-    input.addEventListener('keyup', (e) => {
-      const id = e.target.id;
-      const el_id = id.slice(6);
-      self.store.elements[el_id].changeValue(e.target.value);
-    });
+    const list = document.getElementById(`select_${id}`);
+    const json = document.getElementById(`json_${id}`);
+    const items = document.getElementById(`items_${id}`);
+    if(input){
+      input.addEventListener('keyup', (e) => {
+        const id = e.target.id;
+        const el_id = id.slice(6);
+        self.store.elements[el_id].changeValue(e.target.value);
+      });
+    }
+    if(list){
+      list.addEventListener('change', (e) => {
+        self.store.elements[id].changeValue(e.target.value);
+      });
+    }
+    if(json){
+      json.addEventListener('change', (e) => {
+        let selectedRegion = regions.find(region => region.name === e.target.value);;
+        let itemsSelect = document.getElementById(`items_${id}`);
+        let itemsHTML = '<option value="" disabled selected>Please select</option>';
+        selectedRegion.items.forEach(item => {
+            itemsHTML += `<option>${item}</option>`;
+        });
+        itemsSelect.required = true;
+        itemsSelect.style.display = 'block';
+        itemsSelect.innerHTML = itemsHTML;
+      });
+    }if(items){
+      items.addEventListener('change', (e) => {
+        self.store.elements[id].changeValue(e.target.value);
+      });
+    }
   };
 
   AJTEUserEditor.prototype.actionButtonsDraw = function () {};

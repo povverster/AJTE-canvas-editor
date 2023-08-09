@@ -515,6 +515,7 @@ a:hover {
 .ajtefirstbtnline a {
   flex-grow: 1;
   margin-right: 10px;
+  margin-bottom: 5px;
 }
 
 .ajtefirstbtnline a:last-child {
@@ -567,4 +568,13 @@ a:hover {
   color: white;
   padding: 5px 7px;
   background-color: #285364;
+}
+.mt-10{
+  margin-top: 10px;
+}
+.content-wrapper form input[type=email], .content-wrapper form input[type=number], .content-wrapper form input[type=password], .content-wrapper form input[type=text], .content-wrapper form select {
+  min-width: 270px!important;
+}
+.categories-group ul{
+  z-index: 2;
 }
