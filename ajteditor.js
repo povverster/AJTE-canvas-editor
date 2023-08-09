@@ -1499,7 +1499,7 @@ const { forEach } = require('lodash');
         bind_id: self.bind_id,
         fieldType: self.fieldType,
         list: self.list,
-        json: self.json,
+        json: self.json
       });
 
       self.layer.add(self.el);
@@ -1536,7 +1536,6 @@ const { forEach } = require('lodash');
     self.el.hide();
     self.transformer.hide();
     self.layer.draw();
-
 
     const areaPosition = {
       x: stageBox.left + textPosition.x,
@@ -3187,7 +3186,6 @@ const { forEach } = require('lodash');
       elements: {}
     };
 
-    
     for (let i in this.store.elements) {
       if (this.store && this.store.elements && this.store.elements[i]) {
         json.elements[i] = this.store.elements[i].el;
@@ -3251,11 +3249,11 @@ const { forEach } = require('lodash');
     var form = document.getElementById('ajteasideformfull');
     var submit = document.getElementById('artwork_submit');
 
-    form.addEventListener('submit', function(e){
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
     });
 
-    function sendData(e){
+    function sendData(e) {
       e.preventDefault();
       if (form.checkValidity()) {
         self.beforeSave();
@@ -3272,8 +3270,6 @@ const { forEach } = require('lodash');
     form.addEventListener('click', sendData);
     submit.click();
     form.removeEventListener('click', sendData);
-
-    
   };
 
   AJTEEditor.prototype.send = function (type = 'visible', cb) {
@@ -3281,15 +3277,15 @@ const { forEach } = require('lodash');
     if (ajteMode == 'dev') {
       console.info('AJTEEditor:send');
     }
-    
+
     var form = document.getElementById('ajteasideformfull');
     var submit = document.getElementById('artwork_submit');
 
-    form.addEventListener('submit', function(e){
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
     });
 
-    function sendData(e){
+    function sendData(e) {
       e.preventDefault();
       if (form.checkValidity()) {
         self.beforeSave();
@@ -3306,14 +3302,13 @@ const { forEach } = require('lodash');
     form.addEventListener('click', sendData);
     submit.click();
     form.removeEventListener('click', sendData);
-    
   };
 
   AJTEEditor.prototype.default = function (type = 'visible', cb, e) {
     if (ajteMode == 'dev') {
       console.info('AJTEEditor:default');
     }
-    if (window.confirm("Are you sure you want to Restore?")) {
+    if (window.confirm('Are you sure you want to Restore?')) {
       this.initDraw(this.code);
     }
   };
@@ -3586,61 +3581,66 @@ const { forEach } = require('lodash');
       '" class="ajte-input" value="' +
       this.store.elements[id].label +
       '"/>';
-      
-      if (type === 'editableText') {
-        var element = this.store.elements[id];
-        var fieldType = element.fieldType;
-        var list = element.list;
-        var json = element.json;
 
-        var selectHtml = 
-        `<select id="select_${id}">
-          <option value="string" ${fieldType === 'string' ? 'selected' : ''}>String</option>
-          <option value="list" ${fieldType === 'list' ? 'selected' : ''}>List</option>
-          <option value="json" ${fieldType === 'json' ? 'selected' : ''}>Json import</option>
+    if (type === 'editableText') {
+      var element = this.store.elements[id];
+      var fieldType = element.fieldType;
+      var list = element.list;
+      var json = element.json;
+
+      var selectHtml = `<select id="select_${id}">
+          <option value="string" ${
+            fieldType === 'string' ? 'selected' : ''
+          }>String</option>
+          <option value="list" ${
+            fieldType === 'list' ? 'selected' : ''
+          }>List</option>
+          <option value="json" ${
+            fieldType === 'json' ? 'selected' : ''
+          }>Json import</option>
         </select>`;
-  
-        // Creating the textarea
-        var textareaHtml = `<textarea id="list_${id}" class="mt-10" style="${fieldType !== 'list' ? 'display:none;' : ''}">${list}</textarea>`;
-        // Creating the file input
-        var inputHtml = `<input type="file" id="json_${id}" class="mt-10" accept=".json" style="${fieldType === 'json' ? '' : 'display:none;'} "/>`;
-        // Appending all HTML elements to el
-        el.innerHTML += `Type : ${selectHtml}${textareaHtml}${inputHtml}`;
-      }
 
-      
+      // Creating the textarea
+      var textareaHtml = `<textarea id="list_${id}" class="mt-10" style="${
+        fieldType !== 'list' ? 'display:none;' : ''
+      }">${list}</textarea>`;
+      // Creating the file input
+      var inputHtml = `<input type="file" id="json_${id}" class="mt-10" accept=".json" style="${
+        fieldType === 'json' ? '' : 'display:none;'
+      } "/>`;
+      // Appending all HTML elements to el
+      el.innerHTML += `Type : ${selectHtml}${textareaHtml}${inputHtml}`;
+    }
+
     this.formContainer.appendChild(el);
 
     var input = document.getElementById('input_' + id);
-    
+
     if (type === 'editableText') {
       var select = document.getElementById('select_' + id);
       var list = document.getElementById('list_' + id);
       var json = document.getElementById('json_' + id);
-      
     }
     var el_id = id.slice(6);
-    
+
     input.addEventListener('blur', function (e) {
-      
       self.store.elements[id].label = e.target.value;
       self.store.elements[id].el.attrs.label = e.target.value;
     });
 
     if (type === 'editableText') {
-
       select.addEventListener('change', function (e) {
-        if(e.target.value === 'string'){
-            list.style.display = 'none';
-            json.style.display = 'none';
-            self.store.elements[id].fieldType = e.target.value;
-            self.store.elements[id].el.attrs.fieldType = e.target.value;
-        }else if(e.target.value === 'list'){
+        if (e.target.value === 'string') {
+          list.style.display = 'none';
+          json.style.display = 'none';
+          self.store.elements[id].fieldType = e.target.value;
+          self.store.elements[id].el.attrs.fieldType = e.target.value;
+        } else if (e.target.value === 'list') {
           list.style.display = 'block';
           json.style.display = 'none';
           self.store.elements[id].fieldType = e.target.value;
           self.store.elements[id].el.attrs.fieldType = e.target.value;
-        }else if(e.target.value === 'json'){
+        } else if (e.target.value === 'json') {
           list.style.display = 'none';
           json.style.display = 'block';
           self.store.elements[id].fieldType = e.target.value;
@@ -3659,21 +3659,21 @@ const { forEach } = require('lodash');
         const file = e.target.files[0];
 
         if (file) {
-            const reader = new FileReader();
+          const reader = new FileReader();
 
-            reader.onload = (event) => {
-                try {
-                    const result = event.target.result;
-                    const jsonObject = JSON.parse(result);
-                    const jsonString = JSON.stringify(jsonObject);
-                    self.store.elements[id].json = jsonString;
-                    self.store.elements[id].el.attrs.json = jsonString;
-                } catch (e) {
-                    alert('Invalid JSON file');
-                }
-            };
-            reader.onerror = () => alert('Error reading file');
-            reader.readAsText(file);
+          reader.onload = (event) => {
+            try {
+              const result = event.target.result;
+              const jsonObject = JSON.parse(result);
+              const jsonString = JSON.stringify(jsonObject);
+              self.store.elements[id].json = jsonString;
+              self.store.elements[id].el.attrs.json = jsonString;
+            } catch (e) {
+              alert('Invalid JSON file');
+            }
+          };
+          reader.onerror = () => alert('Error reading file');
+          reader.readAsText(file);
         }
       });
     }
@@ -3947,29 +3947,26 @@ const { forEach } = require('lodash');
       rows = 10;
     }
 
-    
-
-    if(this.store.elements[id].fieldType === 'string'){
+    if (this.store.elements[id].fieldType === 'string') {
       el.innerHTML = `<label>${inpLbl}:</label><textarea id="input_${id}" name="${id}" class="ajte-input" rows="${rows}" required>${inpVal}</textarea>`;
-    }else if(this.store.elements[id].fieldType === 'list'){
+    } else if (this.store.elements[id].fieldType === 'list') {
       const list = this.store.elements[id].list;
       var list_parts = list.trim().split('\n');
       var list_options = '';
-      list_parts.forEach(element => {
+      list_parts.forEach((element) => {
         list_options += `<option value="${element}">${element}</option>`;
       });
       el.innerHTML = `<label>${inpLbl}:</label><select required id="select_${id}" name="${id}" class="ajte-input" ><option value="" disabled selected>Please select</option>${list_options}</select>`;
-    }else if(this.store.elements[id].fieldType === 'json'){
+    } else if (this.store.elements[id].fieldType === 'json') {
       const json = this.store.elements[id].json;
       var regions = JSON.parse(json);
       regions.sort((a, b) => a.order - b.order);
-      let optionsHTML = "";
+      let optionsHTML = '';
       regions.forEach((region, index) => {
-          optionsHTML += `<option value="${region.name}">${region.name}</option>`;
+        optionsHTML += `<option value="${region.name}">${region.name}</option>`;
       });
       el.innerHTML = `<label>${inpLbl}:</label><select required id="json_${id}" name="${id}" class="ajte-input" ><option value="" selected disabled>Please select</option>${optionsHTML}</select><select style="display:none;" class="mt-10" id="items_${id}" name="${id}" class="ajte-input" ></select>`;
     }
-    
 
     this.formContainer.appendChild(el);
 
@@ -3977,31 +3974,35 @@ const { forEach } = require('lodash');
     const list = document.getElementById(`select_${id}`);
     const json = document.getElementById(`json_${id}`);
     const items = document.getElementById(`items_${id}`);
-    if(input){
+    if (input) {
       input.addEventListener('keyup', (e) => {
         const id = e.target.id;
         const el_id = id.slice(6);
         self.store.elements[el_id].changeValue(e.target.value);
       });
     }
-    if(list){
+    if (list) {
       list.addEventListener('change', (e) => {
         self.store.elements[id].changeValue(e.target.value);
       });
     }
-    if(json){
+    if (json) {
       json.addEventListener('change', (e) => {
-        let selectedRegion = regions.find(region => region.name === e.target.value);;
+        let selectedRegion = regions.find(
+          (region) => region.name === e.target.value
+        );
         let itemsSelect = document.getElementById(`items_${id}`);
-        let itemsHTML = '<option value="" disabled selected>Please select</option>';
-        selectedRegion.items.forEach(item => {
-            itemsHTML += `<option>${item}</option>`;
+        let itemsHTML =
+          '<option value="" disabled selected>Please select</option>';
+        selectedRegion.items.forEach((item) => {
+          itemsHTML += `<option>${item}</option>`;
         });
         itemsSelect.required = true;
         itemsSelect.style.display = 'block';
         itemsSelect.innerHTML = itemsHTML;
       });
-    }if(items){
+    }
+    if (items) {
       items.addEventListener('change', (e) => {
         self.store.elements[id].changeValue(e.target.value);
       });
