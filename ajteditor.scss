@@ -582,3 +582,12 @@ a:hover {
 .categories-group ul {
   z-index: 2;
 }
+
+#ajteaside input[type="text"]#artcategory {
+  padding-right: 20px;
+  background-image: url("../imgs/select.png");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 11px 12px;
+  cursor: pointer;
+}
