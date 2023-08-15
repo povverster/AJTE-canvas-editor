@@ -909,15 +909,24 @@ const { forEach } = require('lodash');
 
     var asideButtons = document.getElementById('ajte-leftside');
     var btns = document.createElement('div');
+    // btns.innerHTML =
+    //   '<div> \
+    //         <div class="ajtefirstbtnline">    \
+    //             <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--save-draft" data-action="save"><span>Save as Draft</span></a>  \
+    //             <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--send" data-action="send"><span>Send</span></a>  \
+    //             <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a> \
+    //             <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>Download as PDF</span></a> \
+    //             <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--danger ajte-btn--restore-to-default" data-action="default" ><i class="fa fa-trash-restore"></i><span>Restore to Default</span></a> \
+    //         </div> \
+    //     </div>';
     btns.innerHTML =
       '<div> \
-            <div class="ajtefirstbtnline">    \
-                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--save-draft" data-action="save"><span>Save as Draft</span></a>  \
-                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--send" data-action="send"><span>Send</span></a>  \
-                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a> \
-                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>Download as PDF</span></a> \
-                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--danger ajte-btn--restore-to-default" data-action="default" ><i class="fa fa-trash-restore"></i><span>Restore to Default</span></a> \
-            </div> \
+          <div class="ajtefirstbtnline">    \
+            <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--save-draft" data-action="save"><span>Save as Draft</span></a>  \
+            <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a> \
+            <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>Download as PDF</span></a> \
+            <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--danger ajte-btn--restore-to-default" data-action="default" ><i class="fa fa-trash-restore"></i><span>Restore to Default</span></a> \
+          </div> \
         </div>';
     asideButtons.appendChild(btns);
   };
