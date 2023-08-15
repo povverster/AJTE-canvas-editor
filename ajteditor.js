@@ -3513,15 +3513,26 @@ const { forEach } = require('lodash');
       console.info('AJTEEditor:download');
     }
 
-    var dataURL = this.createDataUrl();
+    const dataURL = this.createDataUrl();
 
-    var link = document.createElement('a');
-    link.download = this.title;
-    link.href = dataURL;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    link = null;
+    fetch(dataURL)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const blobUrl = URL.createObjectURL(blob);
+        window.open(blobUrl, '_blank') || window.location.replace(blobUrl);
+      });
+
+    // const dataURL = this.createDataUrl();
+    // let link = document.createElement('a');
+
+    // link.href = dataURL;
+    // link.download = this.title;
+
+    // document.body.appendChild(link);
+    // link.click();
+
+    // document.body.removeChild(link);
+    // link = null;
   };
 
   AJTEEditor.prototype.activateElement = function (instance, type) {
