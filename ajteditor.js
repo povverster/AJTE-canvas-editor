@@ -2515,7 +2515,9 @@ const { forEach } = require('lodash');
       this.createKonvaPlaceholder();
 
       if (!this.templateId) {
-        this.save('hidden', this.initMedia);
+        // !!!! This is a source of errors !!!!
+        // this.save('hidden', this.initMedia);
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       } else {
         this.initMedia(this, this.templateId);
       }
