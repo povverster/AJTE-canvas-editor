@@ -887,7 +887,7 @@ const { forEach } = require('lodash');
       console.info('AJTESmallBar:addBody');
     }
 
-    var htmldata =
+    const htmldata =
       '<div class="ajte-row ajte-barline-border"> \
                     <div class="ajte-container ajte-barcontainer"> \
                         <div class="ajte-leftside" id="ajte-leftside"> \
@@ -904,30 +904,41 @@ const { forEach } = require('lodash');
                 </div> \
                 <div class="ajte-row ajte-infoline-border"> \
                 </div>';
+
     this.container.innerHTML = htmldata;
     this.disabler = document.getElementById('ajte-bar-disabler');
 
-    var asideButtons = document.getElementById('ajte-leftside');
-    var btns = document.createElement('div');
-    // btns.innerHTML =
-    //   '<div> \
-    //         <div class="ajtefirstbtnline">    \
-    //             <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--save-draft" data-action="save"><span>Save as Draft</span></a>  \
-    //             <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--send" data-action="send"><span>Send</span></a>  \
-    //             <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a> \
-    //             <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>Download as PDF</span></a> \
-    //             <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--danger ajte-btn--restore-to-default" data-action="default" ><i class="fa fa-trash-restore"></i><span>Restore to Default</span></a> \
-    //         </div> \
-    //     </div>';
-    btns.innerHTML =
-      '<div> \
-          <div class="ajtefirstbtnline">    \
-            <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--save-draft" data-action="save"><span>Save as Draft</span></a>  \
-            <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a> \
-            <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>Download as PDF</span></a> \
-            <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--danger ajte-btn--restore-to-default" data-action="default" ><i class="fa fa-trash-restore"></i><span>Restore to Default</span></a> \
-          </div> \
-        </div>';
+    const asideButtons = document.getElementById('ajte-leftside');
+    const btns = document.createElement('div');
+
+    const wrapper = document.getElementById('ajte_wrapper');
+    const isExportPng = !!(wrapper && wrapper.dataset && wrapper.dataset.isExportPng === '1');
+    const isExportPdf = !!(wrapper && wrapper.dataset && wrapper.dataset.isExportPdf === '1');
+
+    let innerHTML = '';
+
+    innerHTML += '<div>';
+    innerHTML += '<div class="ajtefirstbtnline">';
+    innerHTML += '<a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--save-draft" data-action="save"><span>Save as Draft</span></a>';
+    
+    if (false) {
+      innerHTML += '<a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--send" data-action="send"><span>Send</span></a>';
+    }
+
+    if (isExportPng) {
+      innerHTML += '<a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a>';
+    }
+
+    if (isExportPdf) {
+      innerHTML += '<a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>Download as PDF</span></a>';
+    }
+
+    innerHTML += '<a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--danger ajte-btn--restore-to-default" data-action="default" ><i class="fa fa-trash-restore"></i><span>Restore to Default</span></a>';
+
+    innerHTML += '</div></div>';
+
+    btns.innerHTML = innerHTML;
+
     asideButtons.appendChild(btns);
   };
   /*-----------------------------------------------------------------------------------------------------------------------*/
@@ -3324,7 +3335,7 @@ const { forEach } = require('lodash');
     }
   };
 
-  AJTEEditor.prototype.createDataUrl = function () {
+  AJTEEditor.prototype.createDataUrl = function (pixelRatio = 1) {
     this.stage.width(parseInt(this.args.stage.width));
     this.stage.height(parseInt(this.args.stage.height));
 
@@ -3348,7 +3359,7 @@ const { forEach } = require('lodash');
     this.stage.draw();
     this.layer.draw();
 
-    var dataURL = this.stage.toDataURL({ pixelRatio: 1 });
+    const dataURL = this.stage.toDataURL({ pixelRatio });
 
     this.showLabels();
 
@@ -3522,7 +3533,17 @@ const { forEach } = require('lodash');
       console.info('AJTEEditor:download');
     }
 
-    const dataURL = this.createDataUrl();
+    let pixelRatio = 1;
+
+    const wrapper = document.getElementById('ajte_wrapper');
+    if (wrapper && wrapper.dataset && wrapper.dataset.exportPngWidth && wrapper.dataset.exportPngHeight && this.args.stage.width && this.args.stage.height) {
+      const widthRatio = wrapper.dataset.exportPngWidth / this.args.stage.width;
+      const heightRatio = wrapper.dataset.exportPngHeight / this.args.stage.height;
+
+      pixelRatio = widthRatio > heightRatio ? widthRatio : heightRatio;
+    }
+
+    const dataURL = this.createDataUrl(pixelRatio);
 
     fetch(dataURL)
       .then((res) => res.blob())
@@ -3838,18 +3859,34 @@ const { forEach } = require('lodash');
   };
 
   AJTEEditor.prototype.actionButtonsDraw = function () {
-    var asideButtons = document.getElementById('ajteasidebuttons');
-    var btns = document.createElement('div');
+    const asideButtons = document.getElementById('ajteasidebuttons');
+    const btns = document.createElement('div');
+
+    const wrapper = document.getElementById('ajte_wrapper');
+    const isExportPng = !!(wrapper && wrapper.dataset && wrapper.dataset.isExportPng === '1');
+    const isExportPdf = !!(wrapper && wrapper.dataset && wrapper.dataset.isExportPdf === '1');
+
+    let innerHTML = '';
+
+    innerHTML += '<ul class="aside-btn-wrap">';
+    innerHTML += '<li class="ajtefirstbtnline">';
+    innerHTML += '<a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--save-draft" data-action="save"><span>Save as Draft</span></a>';
+    innerHTML += '<a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--save" data-action="send"><span>Save</span></a>';
+    innerHTML += '</li>';
+
+    if (isExportPng) {
+      innerHTML += '<li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a></li>';
+    }
+
+    if (isExportPdf) {
+      innerHTML += '<li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>Download as PDF</span></a></li>';
+    }
+
+    innerHTML += '</ul>';
+    
     btns.className = 'ajte-input-wrap';
-    btns.innerHTML =
-      '<ul class="aside-btn-wrap"> \
-            <li class="ajtefirstbtnline">    \
-                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--save-draft" data-action="save"><span>Save as Draft</span></a>  \
-                <a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--save" data-action="send"><span>Save</span></a>  \
-            </li> \
-            <li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a></li> \
-            <li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--download-pdf ajte-pdf-download" target="_blank"><i class="fa fa-download"></i><span>Download as PDF</span></a></li> \
-        </ul>';
+    btns.innerHTML = innerHTML;
+    
     asideButtons.appendChild(btns);
   };
 
@@ -3858,11 +3895,12 @@ const { forEach } = require('lodash');
       console.info('AJTEEditor:activateAside');
     }
 
-    var self = this;
-    var actionItems = document.querySelectorAll(
+    const self = this;
+    const actionItems = document.querySelectorAll(
       '#ajteasidebuttons a[data-action]'
     );
-    for (var i = 0; i < actionItems.length; i++) {
+
+    for (let i = 0; i < actionItems.length; i++) {
       actionItems[i].addEventListener('click', function () {
         self.menuAction(self, this);
         return false;
@@ -3875,7 +3913,7 @@ const { forEach } = require('lodash');
       console.info('AJTEEditor:menuAction');
     }
 
-    var action = el.dataset['action'];
+    const action = el.dataset['action'];
     self[action]();
   };
 
