@@ -926,7 +926,7 @@ const { forEach } = require('lodash');
     }
 
     if (isExportPng) {
-      innerHTML += '<a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a>';
+      innerHTML += '<a href="#" class="ajte-btn ajte-btn--sm ajte-btn--artwork ajte-btn--download-png" data-action="download" data-menu-action-disbled="1"><i class="fa fa-download"></i><span>Download as PNG</span></a>';
     }
 
     if (isExportPdf) {
@@ -3875,7 +3875,7 @@ const { forEach } = require('lodash');
     innerHTML += '</li>';
 
     if (isExportPng) {
-      innerHTML += '<li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--download-png" data-action="download"><i class="fa fa-download"></i><span>Download as PNG</span></a></li>';
+      innerHTML += '<li class="ajtesecondbtnline"><a href="#" class="ajte-btn ajte-btn--sm ajte-btn--template ajte-btn--download-png" data-action="download" data-menu-action-disbled="1"><i class="fa fa-download"></i><span>Download as PNG</span></a></li>';
     }
 
     if (isExportPdf) {
@@ -3912,6 +3912,12 @@ const { forEach } = require('lodash');
     if (ajteMode == 'dev') {
       console.info('AJTEEditor:menuAction');
     }
+
+    // !!! TEMPORARY SOLUTION !!!
+    if (el && el?.dataset?.menuActionDisbled === '1') {
+      return;
+    }
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!
 
     const action = el.dataset['action'];
     self[action]();
