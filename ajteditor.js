@@ -3408,7 +3408,26 @@ const { forEach } = require('lodash');
     // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     // xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
-    var dataURL = this.createDataUrl();
+    let pixelRatio = 1;
+
+    const wrapper = document.getElementById('ajte_wrapper');
+
+    if (
+      wrapper &&
+      wrapper.dataset &&
+      wrapper.dataset.exportPngWidth &&
+      wrapper.dataset.exportPngHeight &&
+      this.args.stage.width &&
+      this.args.stage.height
+    ) {
+      const widthRatio = wrapper.dataset.exportPngWidth / this.args.stage.width;
+      const heightRatio =
+        wrapper.dataset.exportPngHeight / this.args.stage.height;
+
+      pixelRatio = widthRatio > heightRatio ? widthRatio : heightRatio;
+    }
+
+    const dataURL = this.createDataUrl(pixelRatio);
 
     let formData = new FormData();
     formData.append('title', this.title);
@@ -3557,6 +3576,7 @@ const { forEach } = require('lodash');
     let pixelRatio = 1;
 
     const wrapper = document.getElementById('ajte_wrapper');
+
     if (
       wrapper &&
       wrapper.dataset &&
@@ -3571,6 +3591,8 @@ const { forEach } = require('lodash');
 
       pixelRatio = widthRatio > heightRatio ? widthRatio : heightRatio;
     }
+
+    const dataURL = this.createDataUrl(pixelRatio);
 
     fetch(dataURL)
       .then((res) => res.blob())
