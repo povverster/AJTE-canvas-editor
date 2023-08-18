@@ -3661,8 +3661,9 @@ const { forEach } = require('lodash');
       console.info('AJTEEditor:addInput');
     }
 
-    var self = this;
-    var el = document.createElement('div');
+    const self = this;
+    const el = document.createElement('div');
+
     el.className = 'ajte-input-wrap';
     el.innerHTML =
       '<label>Enter label for your ' +
@@ -3677,12 +3678,12 @@ const { forEach } = require('lodash');
       '"/>';
 
     if (type === 'editableText') {
-      var element = this.store.elements[id];
-      var fieldType = element.fieldType;
-      var list = element.list;
-      var json = element.json;
+      const element = this.store.elements[id];
+      const fieldType = element.fieldType;
+      const list = element.list;
+      const json = element.json;
 
-      var selectHtml = `<select id="select_${id}">
+      const selectHtml = `<select id="select_${id}">
           <option value="string" ${
             fieldType === 'string' ? 'selected' : ''
           }>String</option>
@@ -3695,27 +3696,34 @@ const { forEach } = require('lodash');
         </select>`;
 
       // Creating the textarea
-      var textareaHtml = `<textarea id="list_${id}" class="mt-10" style="${
+      const textareaHtml = `<textarea id="list_${id}" class="mt-10" style="${
         fieldType !== 'list' ? 'display:none;' : ''
       }">${list}</textarea>`;
+
       // Creating the file input
-      var inputHtml = `<input type="file" id="json_${id}" class="mt-10" accept=".json" style="${
+      const inputHtml = `<input type="file" id="json_${id}" class="mt-10" accept=".json" style="${
         fieldType === 'json' ? '' : 'display:none;'
       } "/>`;
+
       // Appending all HTML elements to el
       el.innerHTML += `Type : ${selectHtml}${textareaHtml}${inputHtml}`;
     }
 
     this.formContainer.appendChild(el);
 
-    var input = document.getElementById('input_' + id);
+    const input = document.getElementById('input_' + id);
+
+    let select = null;
+    let list = null;
+    let json = null;
 
     if (type === 'editableText') {
-      var select = document.getElementById('select_' + id);
-      var list = document.getElementById('list_' + id);
-      var json = document.getElementById('json_' + id);
+      select = document.getElementById('select_' + id);
+      list = document.getElementById('list_' + id);
+      json = document.getElementById('json_' + id);
     }
-    var el_id = id.slice(6);
+
+    const el_id = id.slice(6);
 
     input.addEventListener('blur', function (e) {
       self.store.elements[id].label = e.target.value;
@@ -4080,20 +4088,25 @@ const { forEach } = require('lodash');
       el.innerHTML = `<label>${inpLbl}:</label><textarea id="input_${id}" name="${id}" class="ajte-input" rows="${rows}" required>${inpVal}</textarea>`;
     } else if (this.store.elements[id].fieldType === 'list') {
       const list = this.store.elements[id].list;
-      var list_parts = list.trim().split('\n');
-      var list_options = '';
+      const list_parts = list.trim().split('\n');
+
+      let list_options = '';
       list_parts.forEach((element) => {
-        list_options += `<option value="${element}">${element}</option>`;
+        list_options += `<option value="${element}" ${this.store.elements[id].value === element ? 'selected' : ''}>${element}</option>`;
       });
-      el.innerHTML = `<label>${inpLbl}:</label><select required id="select_${id}" name="${id}" class="ajte-input" ><option value="" disabled selected>Please select</option>${list_options}</select>`;
+
+      el.innerHTML = `<label>${inpLbl}:</label><select required id="select_${id}" name="${id}" class="ajte-input" ><option value="" disabled>Please select</option>${list_options}</select>`;
     } else if (this.store.elements[id].fieldType === 'json') {
       const json = this.store.elements[id].json;
-      var regions = JSON.parse(json);
+
+      const regions = JSON.parse(json);      
       regions.sort((a, b) => a.order - b.order);
+
       let optionsHTML = '';
       regions.forEach((region, index) => {
         optionsHTML += `<option value="${region.name}">${region.name}</option>`;
       });
+
       el.innerHTML = `<label>${inpLbl}:</label><select required id="json_${id}" name="${id}" class="ajte-input" ><option value="" selected disabled>Please select</option>${optionsHTML}</select><select style="display:none;" class="mt-10" id="items_${id}" name="${id}" class="ajte-input" ></select>`;
     }
 
@@ -4103,6 +4116,7 @@ const { forEach } = require('lodash');
     const list = document.getElementById(`select_${id}`);
     const json = document.getElementById(`json_${id}`);
     const items = document.getElementById(`items_${id}`);
+
     if (input) {
       input.addEventListener('keyup', (e) => {
         const id = e.target.id;
@@ -4110,27 +4124,34 @@ const { forEach } = require('lodash');
         self.store.elements[el_id].changeValue(e.target.value);
       });
     }
+
     if (list) {
       list.addEventListener('change', (e) => {
         self.store.elements[id].changeValue(e.target.value);
       });
     }
+
     if (json) {
       json.addEventListener('change', (e) => {
         let selectedRegion = regions.find(
           (region) => region.name === e.target.value
         );
+
         let itemsSelect = document.getElementById(`items_${id}`);
+
         let itemsHTML =
           '<option value="" disabled selected>Please select</option>';
+
         selectedRegion.items.forEach((item) => {
           itemsHTML += `<option>${item}</option>`;
         });
+
         itemsSelect.required = true;
         itemsSelect.style.display = 'block';
         itemsSelect.innerHTML = itemsHTML;
       });
     }
+
     if (items) {
       items.addEventListener('change', (e) => {
         self.store.elements[id].changeValue(e.target.value);
