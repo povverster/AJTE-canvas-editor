@@ -3415,6 +3415,7 @@ const { forEach } = require('lodash');
     if (
       wrapper &&
       wrapper.dataset &&
+      wrapper.dataset.isExportPng === '1' &&
       wrapper.dataset.exportPngWidth &&
       wrapper.dataset.exportPngHeight &&
       this.args.stage.width &&
@@ -3580,6 +3581,7 @@ const { forEach } = require('lodash');
     if (
       wrapper &&
       wrapper.dataset &&
+      wrapper.dataset.isExportPng === '1' &&
       wrapper.dataset.exportPngWidth &&
       wrapper.dataset.exportPngHeight &&
       this.args.stage.width &&
