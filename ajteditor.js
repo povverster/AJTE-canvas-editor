@@ -4084,6 +4084,8 @@ const { forEach } = require('lodash');
       rows = 10;
     }
 
+    let regions = null;
+
     if (this.store.elements[id].fieldType === 'string') {
       el.innerHTML = `<label>${inpLbl}:</label><textarea id="input_${id}" name="${id}" class="ajte-input" rows="${rows}" required>${inpVal}</textarea>`;
     } else if (this.store.elements[id].fieldType === 'list') {
@@ -4099,7 +4101,7 @@ const { forEach } = require('lodash');
     } else if (this.store.elements[id].fieldType === 'json') {
       const json = this.store.elements[id].json;
 
-      const regions = JSON.parse(json);      
+      regions = JSON.parse(json);
       regions.sort((a, b) => a.order - b.order);
 
       let optionsHTML = '';
